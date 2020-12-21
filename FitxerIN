@@ -86,9 +86,8 @@ public class FitxerIN {
         int compt = 1;
         aux = llegirP();
         while (car!= null){
-            if(!aux.buida()){
                 compt++;
-            }
+            
             aux = llegirP();
         }
        return compt; 
