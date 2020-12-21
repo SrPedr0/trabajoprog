@@ -92,6 +92,69 @@ public class FitxerIN {
         }
        return compt; 
     }
+    //Comptador de les lletres mes repetides
+    public int[] LletresRep() throws IOException {
+        int abecedario[] = new int[27];
+        car = llegirc();
+        while (car != null) {
+            if (car == 'a' || car == 'A') {
+                abecedario[0]++;
+            } else if (car == 'b' || car == 'B') {
+                abecedario[1]++;
+            }else if(car == 'c'|| car == 'C'){
+                abecedario[2]++;
+            }else if(car == 'd'|| car == 'D'){
+                abecedario[3]++;  
+            }else if(car == 'e'|| car == 'E'){
+                abecedario[4]++;
+            }else if(car =='f'|| car == 'F'){
+                abecedario[5]++;
+            }else if(car == 'g' || car =='G'){
+                abecedario[6]++;
+            }else if(car == 'h' || car =='H'){
+                abecedario[7]++;
+            }else if(car == 'i' || car =='I'){
+                abecedario[8]++;
+            }else if(car == 'j' || car =='J'){
+                abecedario[9]++;
+            }else if(car == 'k' || car =='K'){
+                abecedario[10]++;
+            }else if(car == 'l' || car =='L'){
+                abecedario[11]++;
+            }else if(car == 'm' || car =='M'){
+                abecedario[12]++;
+            }else if(car == 'n' || car =='N'){
+                abecedario[13]++;
+            }else if(car == 'ñ' || car =='Ñ'){
+                abecedario[14]++;
+            }else if(car == 'o' || car =='O'){
+                abecedario[15]++;
+            }else if(car == 'p' || car =='P'){
+                abecedario[16]++;
+            }else if(car == 'q' || car =='Q'){
+                abecedario[17]++;
+            }else if(car == 'r' || car =='R'){
+                abecedario[18]++;
+            }else if(car == 's' || car =='S'){
+                abecedario[19]++;
+            }else if(car == 't' || car =='T'){
+                abecedario[20]++;
+            }else if(car == 'u' || car =='U'){
+                abecedario[21]++;
+            }else if(car == 'v' || car =='V'){
+                abecedario[22]++;
+            }else if(car == 'w' || car =='W'){
+                abecedario[23]++;
+            }else if(car == 'x' || car =='X'){
+                abecedario[24]++;
+            }else if(car == 'y' || car =='Y'){
+                abecedario[25]++;
+            }else if(car == 'z' || car =='Z'){
+                abecedario[26]++;
+            }
+    }
+        return abecedario;
+    }
     //getLin
     public int getLin(){
         return lin;
