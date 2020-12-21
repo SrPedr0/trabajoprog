@@ -45,6 +45,17 @@ public class Main_Practica {
         System.out.println("* Nom fitxer: " + nomf+"                          Caracters totals: " + carTOTALS.CaractersT());
         System.out.println("*                                                       Paraules totals: "+ palTOTALS.ParaulesT());
         System.out.println("*                                                    Líneas totals: " +  carTOTALS.getLin());
+        System.out.println("Quina opció elegiu?");
+        System.out.println("1 Lletra més repetida i nombre d'aparicions");
+        System.out.println("2 Nombre d'aparicions de cada caràcter");
+        System.out.println("3 Paraula més repetida i nombre d'aparicions");
+        System.out.println("4 Cercar paraula");
+        System.out.println("5 Cercar text");
+        System.out.println("6 Paraules repetides");
+        System.out.println("7 Codificar");
+        System.out.println("8 Establir llavor");
+        System.out.println("9 Establir tope de paraules");
+        System.out.println("s Sortir");
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
