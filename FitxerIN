@@ -1,0 +1,108 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package parctica_prog;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ *
+ * @author pedro
+ */
+public class FitxerIN {
+
+    //ATRIBUTS
+    private FileReader fr;
+    private BufferedReader br;
+    private Character car;
+    private Paraula nomf;
+    private int lin = 1;
+    private int col;
+
+    //CONSTRUCTOR
+    public FitxerIN(Paraula p) throws FileNotFoundException {
+        nomf = p;
+        fr = new FileReader(nomf.toString());
+        br = new BufferedReader(fr);
+        
+    }
+
+    //METODES
+    //Llegir 1 caracter d'arxiu
+    public Character llegirc() throws IOException {
+        
+        Character c = null;
+        int valor;
+        valor = br.read();
+        if (valor >= 0) {
+            c = (char) valor;
+            if(valor == 10){
+                lin++;
+            }
+        }
+        return c;
+    }
+
+    //Botar espais i mes de l'arxiu
+    public void BotarBlancsIMES() throws IOException {
+        car = llegirc();
+        while (car != null && car.charValue() < 33) {
+            car = llegirc();
+        }
+        
+    }
+
+    //Llegir paraula d'arxiu
+    public Paraula llegirP() throws IOException {
+
+        Paraula aux = new Paraula();
+        BotarBlancsIMES();
+        while (car != null && car.charValue() > 32) {
+            aux.afeigir(car);
+            car = llegirc();
+        }
+        return aux;
+    }
+    //Caracters totals del fitxer
+    public int CaractersT() throws IOException{
+        int compt = 0;
+        car = llegirc();
+        while (car != null){
+        if(car > 32){
+            compt++;
+        }
+        car = llegirc();
+        }
+        return compt;
+    }
+    //Paraules totals del fitxer
+    public int ParaulesT() throws IOException{
+        Paraula aux = new Paraula();
+        int compt = 1;
+        aux = llegirP();
+        while (car!= null){
+            if(!aux.buida()){
+                compt++;
+            }
+            aux = llegirP();
+        }
+       return compt; 
+    }
+    //getLin
+    public int getLin(){
+        return lin;
+    }
+    //Comprovar500
+   
+    //Tancar fitxer
+    public void close() throws IOException{
+        fr.close();
+        br.close();
+    }
+
+}
