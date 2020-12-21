@@ -99,6 +99,9 @@ public class FitxerIN {
     //Comptador de les lletres mes repetides
     public int[] LletresRep() throws IOException {
         int abecedario[] = new int[27];
+        for(int i=0;i<27;i++){
+            abecedario[i] = 0;
+        }
         car = llegirc();
         while (car != null) {
             if (car == 'a' || car == 'A') {
@@ -156,6 +159,7 @@ public class FitxerIN {
             }else if(car == 'z' || car =='Z'){
                 abecedario[26]++;
             }
+            car = llegirc();
     }
         return abecedario;
     }
@@ -173,3 +177,4 @@ public class FitxerIN {
     }
 
 }
+
