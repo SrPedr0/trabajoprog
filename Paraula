@@ -17,7 +17,7 @@ public class Paraula {
     int TRAM = 10;
     // CONSTRUCTORS
     public Paraula() {
-        paraula = new char[25];
+        paraula = new char[capacitat];
         ind = 0;
     }
 
