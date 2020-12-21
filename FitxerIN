@@ -29,19 +29,19 @@ public class FitxerIN {
         nomf = p;
         fr = new FileReader(nomf.toString());
         br = new BufferedReader(fr);
-        
+
     }
 
     //METODES
     //Llegir 1 caracter d'arxiu
     public Character llegirc() throws IOException {
-        
+
         Character c = null;
         int valor;
         valor = br.read();
         if (valor >= 0) {
             c = (char) valor;
-            if(valor == 10){
+            if (valor == 10) {
                 lin++;
             }
         }
@@ -54,7 +54,7 @@ public class FitxerIN {
         while (car != null && car.charValue() < 33) {
             car = llegirc();
         }
-        
+
     }
 
     //Llegir paraula d'arxiu
@@ -68,30 +68,34 @@ public class FitxerIN {
         }
         return aux;
     }
+
     //Caracters totals del fitxer
-    public int CaractersT() throws IOException{
+    public int CaractersT() throws IOException {
         int compt = 0;
         car = llegirc();
-        while (car != null){
-        if(car > 32){
-            compt++;
-        }
-        car = llegirc();
+        while (car != null) {
+            if (car > 32) {
+                compt++;
+            }
+            car = llegirc();
         }
         return compt;
     }
+
     //Paraules totals del fitxer
-    public int ParaulesT() throws IOException{
+    public int ParaulesT() throws IOException {
         Paraula aux = new Paraula();
         int compt = 1;
         aux = llegirP();
-        while (car!= null){
-                compt++;
-            
+        while (car != null) {
+
+            compt++;
+
             aux = llegirP();
         }
-       return compt; 
+        return compt;
     }
+
     //Comptador de les lletres mes repetides
     public int[] LletresRep() throws IOException {
         int abecedario[] = new int[27];
@@ -155,14 +159,15 @@ public class FitxerIN {
     }
         return abecedario;
     }
+
     //getLin
-    public int getLin(){
+    public int getLin() {
         return lin;
     }
     //Comprovar500
-   
+
     //Tancar fitxer
-    public void close() throws IOException{
+    public void close() throws IOException {
         fr.close();
         br.close();
     }
