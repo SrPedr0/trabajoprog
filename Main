@@ -19,12 +19,13 @@ public class Parctica_prog {
     LT tec = new LT();
 
     public void Inicio() throws FileNotFoundException, IOException {
-        Integer opcio;
+        
         Presentacio();
         nomf = tec.llegirLinia();
         carTOTALS = new FitxerIN(new Paraula(nomf));
         palTOTALS = new FitxerIN(new Paraula(nomf));
-        MenuPrincipal();
+        Switch(MenuPrincipal());
+       
 
     }
 
@@ -33,9 +34,10 @@ public class Parctica_prog {
         System.out.println("*                           PROGRAMA D'ANÀLISIS D'ARXIUS                          *");
         System.out.println("***********************************************************************************");
         System.out.print("* Introdueix el nom de l'arxiu: ");
+        
     }
 
-    public void MenuPrincipal() throws IOException {
+    public Character MenuPrincipal() throws IOException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("***********************************************************************************");
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
@@ -56,7 +58,7 @@ public class Parctica_prog {
         System.out.println("s Sortir");
         System.out.print("Introdueix la teva opció: ");
         Character c = AnalisisOpcio();
-
+        return c;
     }
 
     public char AnalisisOpcio() {
@@ -68,9 +70,35 @@ public class Parctica_prog {
         }
         return c;
     }
+    public void Switch(Character op){
+        switch(op){
+            case '1':
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
+            case '5':
+                break;
+            case '6':
+                break;
+            case '7':
+                break;
+            case '8':
+                break;
+            case '9':
+                break;
+            case 's':
+                break;
+                
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         (new Parctica_prog()).Inicio();
     }
 
 }
+
