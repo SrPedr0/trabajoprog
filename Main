@@ -38,10 +38,7 @@ public class Main_Practica {
         System.out.print("* Introdueix el nom de l'arxiu: ");
     }
     public void MenuPrincipal() throws IOException {
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
+        System.out.println("\n\n\n\n\n\"");
         System.out.println("***********************************************************************************");
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
         System.out.println("***********************************************************************************");
