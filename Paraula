@@ -1,0 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package parctica_prog;
+
+/**
+ *
+ * @author pedro
+ */
+public class Paraula {
+    // ATRIBUTS
+    char paraula[];
+    int ind;
+    int capacitat = 25;
+    int TRAM = 10;
+    // CONSTRUCTORS
+    public Paraula() {
+        paraula = new char[25];
+        ind = 0;
+    }
+
+    public Paraula(String s) {
+        capacitat = s.length();
+        ind = 0;
+        paraula = new char[capacitat];
+        for (int i = 0; i < s.length(); i++) {
+            paraula[ind++] = s.charAt(i);
+        }
+    }
+    //METODES
+    //Afeigir un caracter a una paraula = char array + indicador)
+    public void afeigir(char c){
+       if (ind == capacitat){
+           char aux[] = new char[capacitat + TRAM];
+           for (int i=0;i<ind;i++){
+           aux[i] = paraula[i];
+           }
+           capacitat = capacitat + TRAM;
+           paraula = aux;    
+       }else{
+           paraula[ind++] = c;
+       } 
+    }
+    //Paraula amb zero lletres buida
+    public boolean buida(){
+        return ind == 0;
+    }
+    @Override
+    public String toString(){
+        String res = "";
+        for (int i=0;i<ind;i++){
+            res+= paraula[i];
+        }
+        return res;
+    }
+    
+    
+}
