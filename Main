@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package main_practica;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+/**
+ *
+ * @author pedro
+ */
+public class Main_Practica {
+
+    FitxerIN carTOTALS,palTOTALS;
+    String nomf;
+    int carT;
+    
+
+    public void Inicio() throws FileNotFoundException, IOException {
+        LT tec = new LT();
+        Presentacio();
+        nomf = tec.llegirLinia();
+        carTOTALS = new FitxerIN(new Paraula(nomf));
+        palTOTALS = new FitxerIN(new Paraula(nomf));
+        MenuPrincipal();
+        
+        
+    }
+   
+
+    public void Presentacio() {
+        System.out.println("***********************************************************************************");
+        System.out.println("*                           PROGRAMA D'ANÀLISIS D'ARXIUS                          *");
+        System.out.println("***********************************************************************************");
+        System.out.print("* Introdueix el nom de l'arxiu: ");
+    }
+    public void MenuPrincipal() throws IOException {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("***********************************************************************************");
+        System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
+        System.out.println("***********************************************************************************");
+        System.out.println("* Nom fitxer: " + nomf+"                          Caracters totals: " + carTOTALS.CaractersT());
+        System.out.println("*                                                       Paraules totals: "+ palTOTALS.ParaulesT());
+        System.out.println("*                                                    Líneas totals: " +  carTOTALS.getLin());
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        (new Main_Practica()).Inicio();
+    }
+
+}
