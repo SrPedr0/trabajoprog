@@ -65,7 +65,7 @@ public class Parctica_prog {
     public char AnalisisOpcio() {
         
         Character c = tec.llegirCaracter();
-        while ((c < '1' || c > '9') && c != 's') {
+        while ((c < 1 || c > 9) && c != 's') {
             System.out.print("Pareix que hi ha un error introduiex una opcio:  ");
             c = tec.llegirCaracter();
         }
