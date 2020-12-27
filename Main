@@ -79,6 +79,7 @@ public class Parctica_prog {
                 LletraMesRepetida();
                 break;
             case '2':
+                NombreAparicions();
                 break;
             case '3':
                 break;
@@ -106,8 +107,40 @@ public class Parctica_prog {
         int valor = mesrp.MesRepetidaLl(nombreabc);
         char abc[] = abecedarioES();
         System.out.println("La lletra me repetida es la "+ abc[valor]+ " i surt un total de "+ nombreabc[valor]); 
-        mesrp.close();
-        
+        mesrp.close();       
+    }
+    
+    //Metodo que nos indica cuantas veces se repite una letra
+    public void NombreAparicions() throws FileNotFoundException, IOException {
+        FitxerIN mesrp = new FitxerIN(new Paraula(nomf));
+        int abecedario [] = mesrp.LletresRep();
+        System.out.println("'a': "+ abecedario [0]);
+        System.out.println("'b': "+ abecedario [1]);
+        System.out.println("'c': "+ abecedario [2]);
+        System.out.println("'d': "+ abecedario [3]);
+        System.out.println("'e': "+ abecedario [4]);
+        System.out.println("'f': "+ abecedario [5]);
+        System.out.println("'g': "+ abecedario [6]);
+        System.out.println("'h': "+ abecedario [7]);
+        System.out.println("'i': "+ abecedario [8]);
+        System.out.println("'j': "+ abecedario [9]);
+        System.out.println("'k': "+ abecedario [10]);
+        System.out.println("'l': "+ abecedario [11]);
+        System.out.println("'m': "+ abecedario [12]);
+        System.out.println("'n': "+ abecedario [13]);
+        System.out.println("'ñ': "+ abecedario [14]);
+        System.out.println("'o': "+ abecedario [15]);
+        System.out.println("'p': "+ abecedario [16]);
+        System.out.println("'q': "+ abecedario [17]);
+        System.out.println("'r': "+ abecedario [18]);
+        System.out.println("'s': "+ abecedario [19]);
+        System.out.println("'t': "+ abecedario [20]);
+        System.out.println("'u': "+ abecedario [21]);
+        System.out.println("'v': "+ abecedario [22]);
+        System.out.println("'w': "+ abecedario [23]);
+        System.out.println("'x': "+ abecedario [24]);
+        System.out.println("'y': "+ abecedario [25]);
+        System.out.println("'z': "+ abecedario [26]);
     }
     //Metodo que crea el abecedario español
     public char[] abecedarioES(){
