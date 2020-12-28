@@ -95,7 +95,7 @@ public class Parctica_prog  {
                 
             case '3':
                 System.out.println("\n\n\n\n");
-                fitxIN.ParaulesT();
+                fitxIN.resetA();
                 ParaulaMesRepetida();
                 fitxIN.resetA();
                 break;
