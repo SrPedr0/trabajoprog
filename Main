@@ -64,13 +64,14 @@ public class Parctica_prog  {
         return c;
     }
 
-    public char AnalisisOpcio() {
+    public char AnalisisOpcio() throws IOException {
         
         c = tec.llegirCaracter();
         while ((c.charValue() < '1' || c.charValue() > '9') && c != 's') {
             System.out.print("Pareix que hi ha un error introduiex una opcio:  ");
             c = tec.llegirCaracter();
         }
+        fitxIN.resetA();
         return c;
     }
     public void Switch(Character op) throws IOException{
