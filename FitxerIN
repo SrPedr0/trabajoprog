@@ -25,6 +25,7 @@ public class FitxerIN {
     private Paraula nomf;
     private int lin = 1;
     private int col;
+    private int comptPal;
 
     //CONSTRUCTOR
     public FitxerIN(Paraula p) throws FileNotFoundException, IOException {
@@ -93,16 +94,45 @@ public class FitxerIN {
     public int ParaulesT() throws IOException {
         lin = 1;
         Paraula aux = new Paraula();
-        int compt = 1;
+        comptPal = 1;
         aux = llegirP();
         while (car != null) {
 
-            compt++;
+            comptPal++;
 
             aux = llegirP();
         }
        
-        return compt;
+        return comptPal;
+    }
+    //Metodo que nos devuelve un array de tipo int que contiene el numero de veces que se repite cada palabra
+    public int[] NombreAparicionsPal() throws IOException{
+       
+       Paraula igualsP1 = new Paraula();
+       int compt[] = new int[comptPal];
+       Paraula ParaulesArxiu[] = arrayParaulesArxiu();
+       
+       for(int i = 0; i<comptPal; i++){
+           int j  = i+1;
+           igualsP1 = ParaulesArxiu[i];
+           while(j<comptPal){
+               if(igualsP1.iguals(ParaulesArxiu[j])){
+                   compt[i]++;
+               }
+               j++;              
+           }
+           
+       }
+      return compt; 
+       
+    }
+    //Metodo que nos devuelve un array de tipo Palabra con todas las palabras del Archivo
+    public Paraula[] arrayParaulesArxiu() throws IOException{
+       Paraula ParaulesArxiu[] = new Paraula[comptPal]; 
+         for(int a = 0; a<comptPal; a++){
+           ParaulesArxiu[a] = llegirP();
+       }
+         return ParaulesArxiu;
     }
 
     //Comptador de les lletres mes repetides
@@ -171,9 +201,21 @@ public class FitxerIN {
             car = llegirc();
     }
         
-        br.reset();
+        
         
         return abecedario;
+    }
+    //Palabra mas repetida
+    public int MesRepetidaPal(int a[]){
+        int nombreAparicionsPal[] = new int[comptPal];
+        nombreAparicionsPal = a;
+        int i = 0;
+        for(int j=1; j<comptPal ; j++){
+            if(nombreAparicionsPal[i]<nombreAparicionsPal[j]){
+                i=j;
+            }
+        }
+        return i;
     }
     
     //lletra mes repetida
