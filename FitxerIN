@@ -70,6 +70,7 @@ public class FitxerIN {
             aux.afeigir(car);
             car = llegirc();
         }
+        
         return aux;
     }
 
@@ -100,6 +101,7 @@ public class FitxerIN {
 
             aux = llegirP();
         }
+       
         return compt;
     }
 
@@ -188,6 +190,10 @@ public class FitxerIN {
         
         
         return i;        
+    }
+    //reset de l'arxiu
+    public void resetA() throws IOException{
+        br.reset();
     }
 
     //getLin
