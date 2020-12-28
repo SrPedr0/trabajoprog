@@ -84,14 +84,20 @@ public class Parctica_prog  {
                 System.out.println("****************************************************************************");
                 System.out.println("Nom fitxer: " + nomf+ "\n");
                 LletraMesRepetida();
+                fitxIN.resetA();
                 break;
                 
             case '2':
                 System.out.println("\n\n\n\n");
                 AparicionsCaracters();
+                fitxIN.resetA();
                 break;
                 
             case '3':
+                System.out.println("\n\n\n\n");
+                fitxIN.ParaulesT();
+                ParaulaMesRepetida();
+                fitxIN.resetA();
                 break;
             case '4':
                 break;
@@ -129,6 +135,14 @@ public class Parctica_prog  {
             System.out.println("\n");
         }
     }
+    //Metodo que nos indica cual es la palabra mas repetida del txt y su nombre de apariciones es el apartado 3 del menu principal
+    public void ParaulaMesRepetida() throws IOException{
+        int nombreAparicionsPal[] = fitxIN.NombreAparicionsPal();
+        Paraula ParaulesArchiu[] = fitxIN.arrayParaulesArxiu();
+        int valor = fitxIN.MesRepetidaPal(nombreAparicionsPal);
+        Paraula MESRP = ParaulesArchiu[valor];
+        System.out.println("La paraula mes repetida es " + MESRP.toString() + " i surt un total de "+ nombreAparicionsPal[valor]);
+    }
     
     //Metodo que crea el abecedario español
     public char[] abecedarioES(){
@@ -153,4 +167,3 @@ public class Parctica_prog  {
     }
 
 }
-
