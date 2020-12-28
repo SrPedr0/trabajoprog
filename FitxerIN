@@ -6,6 +6,7 @@
 package parctica_prog;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,17 +20,19 @@ public class FitxerIN {
     //ATRIBUTS
     private FileReader fr;
     private BufferedReader br;
+    private File f;
     private Character car;
     private Paraula nomf;
     private int lin = 1;
     private int col;
 
     //CONSTRUCTOR
-    public FitxerIN(Paraula p) throws FileNotFoundException {
+    public FitxerIN(Paraula p) throws FileNotFoundException, IOException {
         nomf = p;
+        f = new File(nomf.toString());
         fr = new FileReader(nomf.toString());
         br = new BufferedReader(fr);
-
+        br.mark(99999999);
     }
 
     //METODES
@@ -39,6 +42,7 @@ public class FitxerIN {
         Character c = null;
         int valor;
         valor = br.read();
+        
         if (valor >= 0) {
             c = (char) valor;
             if (valor == 10) {
@@ -71,6 +75,7 @@ public class FitxerIN {
 
     //Caracters totals del fitxer
     public int CaractersT() throws IOException {
+        
         int compt = 0;
         car = llegirc();
         while (car != null) {
@@ -79,11 +84,13 @@ public class FitxerIN {
             }
             car = llegirc();
         }
+        br.reset();
         return compt;
     }
 
     //Paraules totals del fitxer
     public int ParaulesT() throws IOException {
+        lin = 1;
         Paraula aux = new Paraula();
         int compt = 1;
         aux = llegirP();
@@ -97,7 +104,7 @@ public class FitxerIN {
     }
 
     //Comptador de les lletres mes repetides
-    public int[] LletresRep() throws IOException {
+    public int[] nombreAparicionsC() throws IOException {
         int abecedario[] = new int[27];
         for(int i=0;i<27;i++){
             abecedario[i] = 0;
@@ -161,10 +168,14 @@ public class FitxerIN {
             }
             car = llegirc();
     }
+        
+        br.reset();
+        
         return abecedario;
     }
+    
     //lletra mes repetida
-    public int MesRepetidaLl(int a[]){
+    public int MesRepetidaLl(int a[]) throws IOException{
         int abecedario[]=new int[27];
         abecedario = a;
         int i=0;
@@ -174,6 +185,8 @@ public class FitxerIN {
                 i = j;
             }
         }
+        
+        
         return i;        
     }
 
@@ -181,8 +194,10 @@ public class FitxerIN {
     public int getLin() {
         return lin;
     }
-    //Comprovar500
-
+    public long getTamañoAr(){
+        long tam = f.length();
+        return tam;
+    }
     //Tancar fitxer
     public void close() throws IOException {
         fr.close();
