@@ -43,6 +43,21 @@ public class Paraula {
            paraula[ind++] = c;
        } 
     }
+    public boolean iguals(Paraula a){
+        boolean res = false;
+        if(ind == a.ind){
+            res = true;
+        }
+        if (res){
+            for(int i=0;i<ind;i++){
+                if(paraula[i]!= a.paraula[i]){
+                    res = false;
+                    i=ind;
+                }
+            }
+        }
+        return res;
+    }
     //Paraula amb zero lletres buida
     public boolean buida(){
         return ind == 0;
@@ -58,3 +73,4 @@ public class Paraula {
     
     
 }
+
