@@ -40,17 +40,14 @@ public class Parctica_prog  {
         
     }
 
-    public Character MenuPrincipal() throws IOException {
-        FitxerIN carTOTALS, palTOTALS;
-        carTOTALS = new FitxerIN(new Paraula(nomf));
-        palTOTALS = new FitxerIN(new Paraula(nomf));
+    public Character MenuPrincipal() throws IOException {   
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("***********************************************************************************");
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
         System.out.println("***********************************************************************************");
-        System.out.println("* Nom fitxer: " + nomf + "                          Caracters totals: " + carTOTALS.CaractersT());
-        System.out.println("*                                                       Paraules totals: " + palTOTALS.ParaulesT());
-        System.out.println("*                                                    Líneas totals: " + carTOTALS.getLin());
+        System.out.println("* Nom fitxer: " + nomf + "                          Caracters totals: " + fitxIN.CaractersT());
+        System.out.println("*                                                       Paraules totals: " + fitxIN.ParaulesT());
+        System.out.println("*                                                    Líneas totals: " + fitxIN.getLin());
         System.out.println("Quina opció elegiu?");
         System.out.println("1 Lletra més repetida i nombre d'aparicions");
         System.out.println("2 Nombre d'aparicions de cada caràcter");
@@ -63,9 +60,7 @@ public class Parctica_prog  {
         System.out.println("9 Establir tope de paraules");
         System.out.println("s Sortir");
         System.out.print("Introdueix la teva opció: ");
-        c = AnalisisOpcio();
-        carTOTALS.close();
-        palTOTALS.close();
+        c = AnalisisOpcio();   
         return c;
     }
 
@@ -117,7 +112,7 @@ public class Parctica_prog  {
     //Metodo que nos indica cual es la letra mas repetida del txt es el apartado 1 del menu principal
     public void LletraMesRepetida() throws FileNotFoundException, IOException{
         
-        int nombreabc[] = fitxIN.LletresRep();
+        int nombreabc[] = fitxIN.nombreAparicionsC();
         int valor = fitxIN.MesRepetidaLl(nombreabc);
         char abc[] = abecedarioES();
         System.out.println("La lletra me repetida es la "+ abc[valor]+ " i surt un total de "+ nombreabc[valor]); 
@@ -126,7 +121,7 @@ public class Parctica_prog  {
     }
     //Metodo que nos indica el nombre de apariciones de cada caracter es el apartado 2 del menu principal
     public void AparicionsCaracters() throws IOException{
-        int nombreAparicions[] = fitxIN.LletresRep();
+        int nombreAparicions[] = fitxIN.nombreAparicionsC();
         char abcES[] = abecedarioES();
         for(int i = 0;i<27;i++){
         System.out.println("La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades");
@@ -157,3 +152,4 @@ public class Parctica_prog  {
     }
 
 }
+
