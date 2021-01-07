@@ -14,11 +14,12 @@ import java.io.IOException;
  */
 public class Parctica_prog  {
 
-    
+    String paraulaCerca;
     String nomf;
     LT tec = new LT();
     FitxerIN fitxIN;
     Character c = ' ';
+    
 
     public void Inicio() throws IOException {
         
@@ -94,12 +95,14 @@ public class Parctica_prog  {
                 break;
                 
             case '3':
-                System.out.println("\n\n\n\n");
-                fitxIN.resetA();
+                System.out.println("\n\n\n\n"); 
                 ParaulaMesRepetida();
-                fitxIN.resetA();
                 break;
             case '4':
+                System.out.print("Introdueix la paraula a cercar: ");
+                paraulaCerca = tec.llegirLinia();
+                System.out.println("\n\n\n\n"); 
+                
                 break;
             case '5':
                 break;
@@ -132,17 +135,37 @@ public class Parctica_prog  {
         char abcES[] = abecedarioES();
         for(int i = 0;i<27;i++){
         System.out.println("La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades");
-            System.out.println("\n");
+            System.out.println("");
         }
-    }
-    //Metodo que nos indica cual es la palabra mas repetida del txt y su nombre de apariciones es el apartado 3 del menu principal
+    } 
+    //Metodo que indica cual es la palabra mas repetida del txt es el apartado 3 del menu principal
     public void ParaulaMesRepetida() throws IOException{
-        int nombreAparicionsPal[] = fitxIN.NombreAparicionsPal();
-        Paraula ParaulesArchiu[] = fitxIN.arrayParaulesArxiu();
-        int valor = fitxIN.MesRepetidaPal(nombreAparicionsPal);
-        Paraula MESRP = ParaulesArchiu[valor];
-        System.out.println("La paraula mes repetida es " + MESRP.toString() + " i surt un total de "+ nombreAparicionsPal[valor]);
+        Paraula pal[] = fitxIN.arrayParaulesT();
+        int comptador[] = fitxIN.RepeticionsParaula(pal);
+        for(int i =0;i<pal.length;i++){
+            if(comptador[i]>=1){
+                comptador[i]++;
+            }
+        }
+        int valor = fitxIN.ValorPalMesRepetida(comptador);
+        System.out.println("La paraula mes repetida es "+ pal[valor] + " i surt un total de " + comptador[valor]);
     }
+    //Metodo que nos encuentra la palabra introducida
+    public void CercarParaula() throws IOException{
+        Paraula paraula1 = new Paraula(paraulaCerca);
+        Paraula paraula2 = fitxIN.llegirP();
+        while(!paraula2.buida()){
+            if(paraula1.iguals(paraula2)){
+                System.out.println("La paraula "+ paraulaCerca + " apareix a la columna " +   + "y a la linea");
+            }
+            paraula2 = fitxIN.llegirP();
+            
+        }
+        
+    }
+
+
+
     
     //Metodo que crea el abecedario español
     public char[] abecedarioES(){
