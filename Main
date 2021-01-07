@@ -29,7 +29,7 @@ public class Parctica_prog  {
         while(c!=115){
         Switch(MenuPrincipal());
         }
-        
+        fitxIN.close();
 
     }
 
@@ -101,8 +101,9 @@ public class Parctica_prog  {
             case '4':
                 System.out.print("Introdueix la paraula a cercar: ");
                 paraulaCerca = tec.llegirLinia();
-                System.out.println("\n\n\n\n"); 
-                
+                System.out.println("\n");
+                CercarParaula();
+                fitxIN.resetA();
                 break;
             case '5':
                 break;
@@ -152,11 +153,13 @@ public class Parctica_prog  {
     }
     //Metodo que nos encuentra la palabra introducida
     public void CercarParaula() throws IOException{
+        fitxIN.setCol(0);
+        fitxIN.setLin(1);
         Paraula paraula1 = new Paraula(paraulaCerca);
         Paraula paraula2 = fitxIN.llegirP();
         while(!paraula2.buida()){
             if(paraula1.iguals(paraula2)){
-                System.out.println("La paraula "+ paraulaCerca + " apareix a la columna " +   + "y a la linea");
+                System.out.println("Apareix a la columna " +  fitxIN.colPal(paraula2) + " y a la linia " + fitxIN.getLin()+"\n");    
             }
             paraula2 = fitxIN.llegirP();
             
@@ -190,3 +193,4 @@ public class Parctica_prog  {
     }
 
 }
+
