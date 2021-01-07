@@ -24,7 +24,7 @@ public class FitxerIN {
     private Character car;
     private Paraula nomf;
     private int lin = 1;
-    private int col;
+    private int col = 0;
     public int comptPal;
 
     //CONSTRUCTOR
@@ -42,11 +42,12 @@ public class FitxerIN {
         Character c = null;
         int valor;
         valor = br.read();
-        
+        col++;
         if (valor >= 0) {
             c = (char) valor;
             if (valor == 10) {
                 lin++;
+                col =0;
             }
         }
         return c;
@@ -101,7 +102,6 @@ public class FitxerIN {
 
             aux = llegirP();
         }
-       
         return comptPal;
     }
 
@@ -248,11 +248,25 @@ public class FitxerIN {
         
         return i;        
     }
+    //Columna de la paraula
+    public int colPal(Paraula a){
+        Paraula aux = a;
+        int colPal;
+        colPal = col - aux.ind;
+        return colPal;
+    }
     //reset de l'arxiu
     public void resetA() throws IOException{
         br.reset();
     }
-
+    //setLin
+    public void setLin(int a){
+        lin = a;
+    }
+    //setCol
+    public void setCol(int a){
+        col = a;
+    }
     //getLin
     public int getLin() {
         return lin;
