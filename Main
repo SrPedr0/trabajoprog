@@ -13,9 +13,11 @@ import java.io.IOException;
  * @author pedro
  */
 public class Parctica_prog  {
-
-    String paraulaCerca;
-    String nomf;
+    
+    char text[];
+    char paraulaCerca[];
+    char nomf[];
+    Paraula Fitxer;
     LT tec = new LT();
     FitxerIN fitxIN;
     Character c = ' ';
@@ -24,8 +26,9 @@ public class Parctica_prog  {
     public void Inicio() throws IOException {
         
         Presentacio();
-        nomf = tec.llegirLinia();
-        fitxIN = new FitxerIN(new Paraula(nomf));
+        nomf = tec.llegirLiniaA();
+        Fitxer = new Paraula(nomf);
+        fitxIN = new FitxerIN(Fitxer);
         while(c!=115){
         Switch(MenuPrincipal());
         }
@@ -46,7 +49,7 @@ public class Parctica_prog  {
         System.out.println("***********************************************************************************");
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
         System.out.println("***********************************************************************************");
-        System.out.println("* Nom fitxer: " + nomf + "                          Caracters totals: " + fitxIN.CaractersT());
+        System.out.println("* Nom fitxer: " + Fitxer.toString() + "                          Caracters totals: " + fitxIN.CaractersT());
         System.out.println("*                                                       Paraules totals: " + fitxIN.ParaulesT());
         System.out.println("*                                                    Líneas totals: " + fitxIN.getLin());
         System.out.println("Quina opció elegiu?");
@@ -83,7 +86,7 @@ public class Parctica_prog  {
                 System.out.println("****************************************************************************");
                 System.out.println("              Lletra mes repetida               ");
                 System.out.println("****************************************************************************");
-                System.out.println("Nom fitxer: " + nomf+ "\n");
+                System.out.println("Nom fitxer: " + Fitxer.toString()+ "\n");
                 LletraMesRepetida();
                 fitxIN.resetA();
                 break;
@@ -100,12 +103,17 @@ public class Parctica_prog  {
                 break;
             case '4':
                 System.out.print("Introdueix la paraula a cercar: ");
-                paraulaCerca = tec.llegirLinia();
+                paraulaCerca = tec.llegirLiniaA();
                 System.out.println("\n");
                 CercarParaula();
                 fitxIN.resetA();
                 break;
             case '5':
+                System.out.print("Introdueix el text a cercar: ");
+                text = tec.llegirLiniaA();
+                System.out.println("\n");
+                CercarText();
+                fitxIN.resetA();
                 break;
             case '6':
                 break;
@@ -149,7 +157,7 @@ public class Parctica_prog  {
             }
         }
         int valor = fitxIN.ValorPalMesRepetida(comptador);
-        System.out.println("La paraula mes repetida es "+ pal[valor] + " i surt un total de " + comptador[valor]);
+        System.out.println("La paraula mes repetida es "+ pal[valor] + " i surt un total de " + comptador[valor] + " vegades");
     }
     //Metodo que nos encuentra la palabra introducida
     public void CercarParaula() throws IOException{
@@ -163,9 +171,40 @@ public class Parctica_prog  {
             }
             paraula2 = fitxIN.llegirP();
             
-        }
-        
+        } 
     }
+    public void CercarText() throws IOException{
+        fitxIN.setCol(0);
+        fitxIN.setLin(1);
+        Paraula txt = new Paraula(text);
+        Paraula txt2 = new Paraula();
+        Paraula paraula1 = primeraParaula(text);
+        Paraula paraula2 = fitxIN.llegirP();
+        while(!paraula2.buida()){
+            if(paraula1.iguals(paraula2)){
+                txt2 = fitxIN.llegirTxt(text.length-paraula1.ind);
+                System.out.println("hola");
+                if(txt.iguals(txt2)){
+                    System.out.println("Apareix a la linia " + fitxIN.getLin() + " y a la columna " + fitxIN.colPal(txt2));
+                }
+            }
+            paraula2 = fitxIN.llegirP();
+        }
+    }
+    //Metode que agafa la primera paraula d'un char array
+    public Paraula primeraParaula(char a[]){
+        Paraula aux = new Paraula();
+        boolean trobada = true;
+        for (int i=0;(i<a.length)&&trobada;i++){
+            if(a[i]!= ' '){
+            aux.paraula[i] = a[i]; 
+            }else{
+                trobada = false;
+        }   
+        }
+        return aux;
+    }
+    
 
 
 
@@ -193,4 +232,3 @@ public class Parctica_prog  {
     }
 
 }
-
