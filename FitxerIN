@@ -24,7 +24,7 @@ public class FitxerIN {
     private Character car;
     private Paraula nomf;
     private int lin = 1;
-    private int col = 0;
+    private int col = 1;
     public int comptPal;
 
     //CONSTRUCTOR
@@ -74,6 +74,17 @@ public class FitxerIN {
         
         return aux;
     }
+    //llegir text d'arxiu
+    public Paraula llegirTxt(int limit) throws IOException{
+        Paraula aux = new Paraula();
+        car = llegirc();
+        while(car!=null && car<=limit){
+            aux.afeigir(car);
+            car = llegirc();
+        }
+        return aux;
+    }
+    //agafar primera paraula d'un 
 
     //Caracters totals del fitxer
     public int CaractersT() throws IOException {
