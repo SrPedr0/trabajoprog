@@ -22,6 +22,7 @@ public class Parctica_prog  {
     FitxerIN fitxIN;
     Character c = ' ';
     int ParaulesT;
+    int col;
 
     public void Inicio() throws IOException {
         
@@ -117,8 +118,12 @@ public class Parctica_prog  {
                 fitxIN.resetA();
                 break;
             case '6':
+                System.out.println("\n\n\n\n"); 
+                ParaulesSeguides();
+                fitxIN.resetA();
                 break;
             case '7':
+                
                 break;
             case '8':
                 break;
@@ -162,7 +167,7 @@ public class Parctica_prog  {
         comptador[valor]++;
         System.out.println("La paraula mes repetida es "+ pal[valor] + " i surt un total de " + comptador[valor] + " vegades");
     }
-    //Metodo que nos encuentra la palabra introducida
+    //Metodo que nos encuentra la palabra introducida es el apartado 4 del menu principal
     public void CercarParaula() throws IOException{
         fitxIN.setCol(0);
         fitxIN.setLin(1);
@@ -176,36 +181,40 @@ public class Parctica_prog  {
             
         } 
     }
+    //Metodo que nos encuentra el texto introducidoes el apartado 5 del menu principal
     public void CercarText() throws IOException{
-        fitxIN.setCol(0);
-        fitxIN.setLin(1);
         Text primertext = new Text(text);
-        System.out.println(primertext);
         Text segontext = fitxIN.llegirT();
-        System.out.println(segontext);
+        segontext.setCol(1);
+        segontext.setLin(1);
         Paraula primera = primertext.agafarParauladeText();
-        System.out.println(primera);
         Paraula segona = segontext.agafarParauladeText();
-        System.out.println(segona);
-        
             while(!segona.buida()){
                 if(primera.iguals(segona)){  
-                    System.out.println("trobada");
+                    
                     if(primertext.Tigual(segontext)){
-                        System.out.println("Text trobat a la linia");
+                        System.out.println("Text trobat a la linia "+ segontext.lin + " i columna " + (segontext.col-segona.ind));
                     }
                 } 
                 segona = segontext.agafarParauladeText();
-                System.out.println(segona);
-                
-            }
-        
-            
-            
-        
-            
+            }      
     }
-
+    //Metodo que nos encuentra 2 palabras iguales que van seguidas
+    public void ParaulesSeguides() throws IOException{
+        fitxIN.setLin(1);
+        fitxIN.setCol(0);
+        Paraula primera = fitxIN.llegirP();
+        Paraula segona = fitxIN.llegirP();
+        while(!segona.buida()){
+            if(primera.iguals(segona)){
+                
+                System.out.println("Trobada " + primera + " a la linia "+ fitxIN.getLin() + " i columna " + col);
+            }
+            primera = segona;
+            col = fitxIN.getCol()-primera.ind;
+            segona = fitxIN.llegirP();
+        }
+    }
     
 
 
@@ -236,3 +245,4 @@ public class Parctica_prog  {
     }
 
 }
+
