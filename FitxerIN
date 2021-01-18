@@ -74,17 +74,18 @@ public class FitxerIN {
         
         return aux;
     }
-    //llegir text d'arxiu
-    public Paraula llegirTxt(int limit) throws IOException{
-        Paraula aux = new Paraula();
+    public Text llegirT() throws IOException{
+        Text aux = new Text();
         car = llegirc();
-        while(car!=null && car<=limit){
+        while (car != null){
             aux.afeigir(car);
             car = llegirc();
         }
-        return aux;
+        return aux;   
     }
-    //agafar primera paraula d'un 
+ 
+  
+    
 
     //Caracters totals del fitxer
     public int CaractersT() throws IOException {
@@ -190,58 +191,23 @@ public class FitxerIN {
         
         return abecedario;
     }
-    //Array de palabras que contiene todas las palabras del texto
-    public Paraula[] arrayParaulesT() throws IOException{
-       int ParaulesT = ParaulesT();
-       br.reset();
-       Paraula aux[] = new Paraula[ParaulesT];
-       for(int i=0;i<ParaulesT;i++){
-           aux[i] = llegirP();
-       }
-      br.reset();
-      return aux;   
-    }
-    //Array de las repeticiones de cada palabra
-    public int[] RepeticionsParaula(Paraula a[]) throws IOException{
-       int ParaulesT = ParaulesT();
-       br.reset();
-       Paraula aux[] = a;
-       int compt[] = new int[ParaulesT];
-       boolean repetida[] =new boolean[ParaulesT];
-       for(int i=0;i<ParaulesT;i++){
-           repetida[i] = false;
-       }
-       for(int j = 0;j<ParaulesT;j++){
-       if(!repetida[j]){
-        for (int i=j+1;i<ParaulesT;i++){
-           
-           if(aux[j].iguals(aux[i])){
-              compt[j]++;
-              repetida[i] = true;
-           }
-           
-       }
-       }
-       }
-       
-      return compt; 
-    }
-
     //Palabra mas repetida
-    public int ValorPalMesRepetida(int a[]) throws IOException{
-        int ParaulesT = ParaulesT();
-        br.reset();
-        int paraules[]=new int[ParaulesT];
+    public int MesRepetidaPal(int a[], int b) throws IOException{
+        BibliotecaParaules biblio = new BibliotecaParaules();
+        int ParaulesT = b;
+        int paraules[]= new int[a.length];
         paraules = a;
         int i=0;
-        for(int j=1; j<ParaulesT; j++){
+        for(int j=1; j<a.length; j++){
          
             if(paraules[i]<paraules[j]){
                 i = j;
             }
         }
+        br.reset();
         return i;
     }
+    
 
     
     //lletra mes repetida
