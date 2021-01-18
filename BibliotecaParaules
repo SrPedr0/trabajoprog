@@ -1,0 +1,55 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package parctica_prog;
+
+/**
+ *
+ * @author pedro
+ */
+public class BibliotecaParaules {
+    //ATRIBUTS
+    private int MAXPAL = 300;
+    private int INCREMENT = 300;
+    private Paraula trobades[];
+    private int aparicionsPal[];
+    private int NombreTrobades = 0;
+    //CONTRUCTOR
+    public BibliotecaParaules(){
+        trobades = new Paraula[MAXPAL];
+        aparicionsPal = new int [MAXPAL];   
+    }
+    //METODES
+    public void Tractar(Paraula p){
+        int idx = 0;
+        while (idx<NombreTrobades && !p.iguals(trobades[idx])){
+            idx++;
+        }
+        if(idx!=NombreTrobades){
+            aparicionsPal[idx]++;
+        }else{
+            if(NombreTrobades == trobades.length){
+                Paraula novaTrobades[] = new Paraula[trobades.length+INCREMENT];
+                int novaAparicionsPal[] = new int [trobades.length+INCREMENT];
+                
+                for (int i=0;i<trobades.length;i++){
+                    novaTrobades[i] = trobades[i];
+                    novaAparicionsPal[i] = aparicionsPal[i];
+                }
+                trobades = novaTrobades;
+                aparicionsPal = novaAparicionsPal;
+            }
+        trobades[idx] = p;
+        NombreTrobades++;         
+        }
+    }
+    public Paraula[] getTrobades(){
+        return trobades;
+    }
+    public int[] getAparicionsPal(){
+        return aparicionsPal;
+    }
+    
+}
