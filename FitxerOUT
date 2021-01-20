@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package parctica_prog;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
+ *
+ * @author pedro
+ */
+public class FitxerOUT {
+
+    private FileWriter fw;
+    private BufferedWriter bw;
+    private Paraula nomf;
+
+    public FitxerOUT(Paraula a) throws IOException {
+        nomf = a;
+        fw = new FileWriter(nomf.toString());
+        bw = new BufferedWriter(fw);
+    }
+
+    public void gravarC(char c) throws IOException {
+        char aux[] = new char[1];
+        aux[0] = c;
+        bw.write(aux);
+    }
+
+    public void close() throws IOException {
+        bw.flush();
+        fw.close();
+        bw.close();
+    }
+}
