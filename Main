@@ -5,33 +5,34 @@
  */
 package parctica_prog;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
  * @author pedro
  */
-public class Parctica_prog  {
-    
-    char text[];
-    char paraulaCerca[];
-    char nomf[];
-    Paraula Fitxer;
-    LT tec = new LT();
-    FitxerIN fitxIN;
-    Character c = ' ';
-    int ParaulesT;
-    int col;
+public class Parctica_prog {
+
+    private char text[];
+    private char paraulaCerca[];
+    private Paraula Fitxer;
+    private LT tec = new LT();
+    private FitxerIN fitxIN;
+    private Character c = ' ';
+    private int ParaulesT;
+    private int col;
+    private int llavor;
 
     public void Inicio() throws IOException {
-        
+
         Presentacio();
-        nomf = tec.llegirLiniaA();
-        Fitxer = new Paraula(nomf);
+        Fitxer = AnalisisNomFitx();
         fitxIN = new FitxerIN(Fitxer);
-        while(c!=115){
-        Switch(MenuPrincipal());
+        while (c != 115) {
+            Switch(MenuPrincipal());
         }
         fitxIN.close();
 
@@ -41,11 +42,10 @@ public class Parctica_prog  {
         System.out.println("***********************************************************************************");
         System.out.println("*                           PROGRAMA D'ANÀLISIS D'ARXIUS                          *");
         System.out.println("***********************************************************************************");
-        System.out.print("* Introdueix el nom de l'arxiu: ");
-        
+
     }
 
-    public Character MenuPrincipal() throws IOException {   
+    public Character MenuPrincipal() throws IOException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("***********************************************************************************");
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
@@ -53,7 +53,7 @@ public class Parctica_prog  {
         System.out.println("* Nom fitxer: " + Fitxer.toString() + "                          Caracters totals: " + fitxIN.CaractersT());
         ParaulesT = fitxIN.ParaulesT();
         System.out.println("*                                                       Paraules totals: " + ParaulesT);
-        System.out.println("*                                                    Líneas totals: " + fitxIN.getLin());
+        System.out.println("*                                                    Línies totals: " + fitxIN.getLin());
         System.out.println("Quina opció elegiu?");
         System.out.println("1 Lletra més repetida i nombre d'aparicions");
         System.out.println("2 Nombre d'aparicions de cada caràcter");
@@ -66,12 +66,33 @@ public class Parctica_prog  {
         System.out.println("9 Establir tope de paraules");
         System.out.println("s Sortir");
         System.out.print("Introdueix la teva opció: ");
-        c = AnalisisOpcio();   
+        c = AnalisisOpcio();
         return c;
     }
 
+    public Paraula AnalisisNomFitx() {
+        Fitxer = null;
+        File fil = null;
+        while (fil == null) {
+            System.out.print("* Introdueix el nom de l'arxiu: ");
+            Fitxer = new Paraula(tec.llegirLiniaA());
+            if (Fitxer != null) {
+                fil = new File(Fitxer.toString());
+                if (!fil.exists()) {
+                    System.out.println("* ERROR!!! Arxiu inexistent");
+                    fil = null;
+                }
+            } else {
+                System.out.println("* ERROR!!! Arxiu inexistent");
+
+            }
+
+        }
+        return Fitxer;
+    }
+
     public char AnalisisOpcio() throws IOException {
-        
+
         c = tec.llegirCaracter();
         while ((c.charValue() < '1' || c.charValue() > '9') && c != 's') {
             System.out.print("Pareix que hi ha un error introduiex una opcio:  ");
@@ -80,84 +101,89 @@ public class Parctica_prog  {
         fitxIN.resetA();
         return c;
     }
-    public void Switch(Character op) throws IOException{
-        
-        switch(op){
+
+    public void Switch(Character op) throws IOException {
+
+        switch (op) {
             case '1':
                 System.out.println("\n\n\n\n");
                 System.out.println("****************************************************************************");
                 System.out.println("              Lletra mes repetida               ");
                 System.out.println("****************************************************************************");
-                System.out.println("Nom fitxer: " + Fitxer.toString()+ "\n");
+                System.out.println("Nom fitxer: " + Fitxer.toString() + "\n");
                 LletraMesRepetida();
                 fitxIN.resetA();
                 break;
-                
+
             case '2':
                 System.out.println("\n\n\n\n");
                 AparicionsCaracters();
                 fitxIN.resetA();
                 break;
-                
+
             case '3':
-                System.out.println("\n\n\n\n"); 
+                System.out.println("\n\n\n\n");
                 ParaulaMesRepetida();
                 break;
             case '4':
                 System.out.print("Introdueix la paraula a cercar: ");
                 paraulaCerca = tec.llegirLiniaA();
-                System.out.println("\n");
+                System.out.println("\n\n\n\n");
                 CercarParaula();
                 fitxIN.resetA();
                 break;
             case '5':
                 System.out.print("Introdueix el text a cercar: ");
                 text = tec.llegirLiniaA();
-                System.out.println("\n");
+                System.out.println("\n\n\n\n");
                 CercarText();
                 fitxIN.resetA();
                 break;
             case '6':
-                System.out.println("\n\n\n\n"); 
+                System.out.println("\n\n\n\n");
                 ParaulesSeguides();
                 fitxIN.resetA();
                 break;
             case '7':
-                
+                System.out.println("\n\n\n\n");
+                Codificar();
                 break;
             case '8':
+                System.out.println("\n\n\n\n");
+                EstablirLLavor();
                 break;
             case '9':
                 break;
-                     
+
         }
-        
+
     }
 
     //Metodo que nos indica cual es la letra mas repetida del txt es el apartado 1 del menu principal
-    public void LletraMesRepetida() throws FileNotFoundException, IOException{
-        
+    public void LletraMesRepetida() throws FileNotFoundException, IOException {
+
         int nombreabc[] = fitxIN.nombreAparicionsC();
         int valor = fitxIN.MesRepetidaLl(nombreabc);
         char abc[] = abecedarioES();
-        System.out.println("La lletra me repetida es la "+ abc[valor]+ " i surt un total de "+ nombreabc[valor] +" vegades"); 
-        
-        
+        System.out.println("La lletra me repetida es la " + abc[valor] + " i surt un total de " + nombreabc[valor] + " vegades");
+
     }
+
     //Metodo que nos indica el nombre de apariciones de cada caracter es el apartado 2 del menu principal
-    public void AparicionsCaracters() throws IOException{
+    public void AparicionsCaracters() throws IOException {
         int nombreAparicions[] = fitxIN.nombreAparicionsC();
         char abcES[] = abecedarioES();
-        for(int i = 0;i<27;i++){
-        System.out.println("La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades");
+        for (int i = 0; i < 27; i++) {
+            System.out.println("La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades");
             System.out.println("");
         }
-    } 
+    }
+
     //Metodo que indica cual es la palabra mas repetida del txt es el apartado 3 del menu principal
-    public void ParaulaMesRepetida() throws IOException{
+    public void ParaulaMesRepetida() throws IOException {
         BibliotecaParaules biblio = new BibliotecaParaules();
         Paraula paraulanova = fitxIN.llegirP();
-        while(!paraulanova.buida()){
+        while (!paraulanova.buida()) {
             biblio.Tractar(paraulanova);
             paraulanova = fitxIN.llegirP();
         }
@@ -165,79 +191,89 @@ public class Parctica_prog  {
         int comptador[] = biblio.getAparicionsPal();
         int valor = fitxIN.MesRepetidaPal(comptador, ParaulesT);
         comptador[valor]++;
-        System.out.println("La paraula mes repetida es "+ pal[valor] + " i surt un total de " + comptador[valor] + " vegades");
+        System.out.println("La paraula mes repetida es " + pal[valor] + " i surt un total de " + comptador[valor] + " vegades");
     }
+
     //Metodo que nos encuentra la palabra introducida es el apartado 4 del menu principal
-    public void CercarParaula() throws IOException{
+    public void CercarParaula() throws IOException {
         fitxIN.setCol(0);
         fitxIN.setLin(1);
         Paraula paraula1 = new Paraula(paraulaCerca);
         Paraula paraula2 = fitxIN.llegirP();
-        while(!paraula2.buida()){
-            if(paraula1.iguals(paraula2)){
-                System.out.println("Apareix a la columna " +  fitxIN.colPal(paraula2) + " y a la linia " + fitxIN.getLin()+"\n");    
+        while (!paraula2.buida()) {
+            if (paraula1.iguals(paraula2)) {
+                System.out.println("Apareix a la columna " + fitxIN.colPal(paraula2) + " y a la linia " + fitxIN.getLin() + "\n");
             }
             paraula2 = fitxIN.llegirP();
-            
-        } 
+
+        }
     }
-    //Metodo que nos encuentra el texto introducidoes el apartado 5 del menu principal
-    public void CercarText() throws IOException{
+
+    //Metodo que nos encuentra el texto introducido es el apartado 5 del menu principal
+    public void CercarText() throws IOException {
         Text primertext = new Text(text);
         Text segontext = fitxIN.llegirT();
         segontext.setCol(1);
         segontext.setLin(1);
         Paraula primera = primertext.agafarParauladeText();
         Paraula segona = segontext.agafarParauladeText();
-            while(!segona.buida()){
-                if(primera.iguals(segona)){  
-                    
-                    if(primertext.Tigual(segontext)){
-                        System.out.println("Text trobat a la linia "+ segontext.lin + " i columna " + (segontext.col-segona.ind));
-                    }
-                } 
-                segona = segontext.agafarParauladeText();
-            }      
+        while (!segona.buida()) {
+            if (primera.iguals(segona)) {
+
+                if (primertext.Tigual(segontext)) {
+                    System.out.println("Text trobat a la linia " + segontext.lin + " i columna " + (segontext.col - segona.ind));
+                }
+            }
+            segona = segontext.agafarParauladeText();
+        }
     }
-    //Metodo que nos encuentra 2 palabras iguales que van seguidas
-    public void ParaulesSeguides() throws IOException{
+
+    //Metodo que nos encuentra 2 palabras iguales que van seguidases el apartado 6 del menu principal 
+    public void ParaulesSeguides() throws IOException {
         fitxIN.setLin(1);
         fitxIN.setCol(0);
         Paraula primera = fitxIN.llegirP();
         Paraula segona = fitxIN.llegirP();
-        while(!segona.buida()){
-            if(primera.iguals(segona)){
-                
-                System.out.println("Trobada " + primera + " a la linia "+ fitxIN.getLin() + " i columna " + col);
+        while (!segona.buida()) {
+            if (primera.iguals(segona)) {
+
+                System.out.println("Trobada " + primera + " a la linia " + fitxIN.getLin() + " i columna " + col);
             }
             primera = segona;
-            col = fitxIN.getCol()-primera.ind;
+            col = fitxIN.getCol() - primera.ind;
             segona = fitxIN.llegirP();
         }
     }
-    
 
+    //Metodo que nos codifica el archivo es el apartado 7 del menu principal
+    public void Codificar() throws IOException {
+        CodDes Cod = new CodDes();
+        Cod.PrepararCodificacio();
+        Cod.codificar(Fitxer);
+    }
 
+    //Metodo que nos permite modificar el valor de la semilla del random
+    public void EstablirLLavor() throws IOException {
+        CodDes Des = new CodDes();
+        Des.PrepararCodificacio();
+        Des.descodificar(Fitxer);
 
-    
+    }
+
     //Metodo que crea el abecedario español
-    public char[] abecedarioES(){
+    public char[] abecedarioES() {
         char abc[] = new char[27];
         int j = 97;
-        for(int i=0;i<14;i++){
-            abc[i] = (char)j;
+        for (int i = 0; i < 14; i++) {
+            abc[i] = (char) j;
             j++;
         }
         abc[14] = 'ñ';
-        for(int i=15;i<27;i++){
-            abc[i] = (char)j;
+        for (int i = 15; i < 27; i++) {
+            abc[i] = (char) j;
             j++;
         }
         return abc;
-    }
-    
-    public char[] getnomF(){
-        return nomf;
     }
 
     public static void main(String[] args) throws IOException {
@@ -245,4 +281,3 @@ public class Parctica_prog  {
     }
 
 }
-
