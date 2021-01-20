@@ -10,11 +10,13 @@ package parctica_prog;
  * @author pedro
  */
 public class Paraula {
+
     // ATRIBUTS
-    char paraula[];
+    private char paraula[];
     int ind;
-    int capacitat = 25;
-    int TRAM = 10;
+    private int capacitat = 25;
+    private int TRAM = 10;
+
     // CONSTRUCTORS
     public Paraula() {
         paraula = new char[capacitat];
@@ -29,41 +31,60 @@ public class Paraula {
             paraula[ind++] = s[i];
         }
     }
+
     //METODES
     //Afeigir un caracter a una paraula = char array + indicador)
-    public void afeigir(char c){
-       if (ind == capacitat){
-           char aux[] = new char[capacitat + TRAM];
-           for (int i=0;i<ind;i++){
-           aux[i] = paraula[i];
-           }
-           capacitat = capacitat + TRAM;
-           paraula = aux;    
-       }else{
-           paraula[ind++] = c;
-       } 
+    public void afeigir(char c) {
+        if (ind == capacitat) {
+            char aux[] = new char[capacitat + TRAM];
+            for (int i = 0; i < ind; i++) {
+                aux[i] = paraula[i];
+            }
+            capacitat = capacitat + TRAM;
+            paraula = aux;
+            paraula[ind++] = c;
+        } else {
+            paraula[ind++] = c;
+        }
     }
+
     //Comprobar si son iguals
-    public boolean iguals(Paraula a){
+    public boolean iguals(Paraula a) {
         boolean res = ind == a.ind;
-        for(int i=0;(i<ind)&&res;i++){
+        for (int i = 0; (i < ind) && res; i++) {
             res = paraula[i] == a.paraula[i];
         }
         return res;
     }
- 
+
     //Paraula amb zero lletres buida
-    public boolean buida(){
+    public boolean buida() {
         return ind == 0;
     }
+
+    public void PerCodificar() {
+        afeigir('.');
+        afeigir('c');
+        afeigir('o');
+        afeigir('d');
+        afeigir('.');
+        afeigir('t');
+        afeigir('x');
+        afeigir('t');
+    }
+
+    public void setInd(int a) {
+        ind = a;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         String res = "";
-        for (int i=0;i<ind;i++){
-            res+= paraula[i];
+        for (int i = 0; i < ind; i++) {
+            res += paraula[i];
         }
         return res;
     }
-    
-    
+
 }
+
