@@ -47,7 +47,7 @@ public class FitxerIN {
             c = (char) valor;
             if (valor == 10) {
                 lin++;
-                col =0;
+                col = 0;
             }
         }
         return c;
@@ -71,25 +71,23 @@ public class FitxerIN {
             aux.afeigir(car);
             car = llegirc();
         }
-        
+
         return aux;
     }
-    public Text llegirT() throws IOException{
+
+    public Text llegirT() throws IOException {
         Text aux = new Text();
         car = llegirc();
-        while (car != null){
+        while (car != null) {
             aux.afeigir(car);
             car = llegirc();
         }
-        return aux;   
+        return aux;
     }
- 
-  
-    
 
     //Caracters totals del fitxer
     public int CaractersT() throws IOException {
-        
+
         int compt = 0;
         car = llegirc();
         while (car != null) {
@@ -117,14 +115,10 @@ public class FitxerIN {
         return comptPal;
     }
 
-       
-    
-
-
     //Comptador de les lletres mes repetides
     public int[] nombreAparicionsC() throws IOException {
         int abecedario[] = new int[27];
-        for(int i=0;i<27;i++){
+        for (int i = 0; i < 27; i++) {
             abecedario[i] = 0;
         }
         car = llegirc();
@@ -133,125 +127,138 @@ public class FitxerIN {
                 abecedario[0]++;
             } else if (car == 'b' || car == 'B') {
                 abecedario[1]++;
-            }else if(car == 'c'|| car == 'C'){
+            } else if (car == 'c' || car == 'C') {
                 abecedario[2]++;
-            }else if(car == 'd'|| car == 'D'){
-                abecedario[3]++;  
-            }else if(car == 'e'|| car == 'E'){
+            } else if (car == 'd' || car == 'D') {
+                abecedario[3]++;
+            } else if (car == 'e' || car == 'E') {
                 abecedario[4]++;
-            }else if(car =='f'|| car == 'F'){
+            } else if (car == 'f' || car == 'F') {
                 abecedario[5]++;
-            }else if(car == 'g' || car =='G'){
+            } else if (car == 'g' || car == 'G') {
                 abecedario[6]++;
-            }else if(car == 'h' || car =='H'){
+            } else if (car == 'h' || car == 'H') {
                 abecedario[7]++;
-            }else if(car == 'i' || car =='I'){
+            } else if (car == 'i' || car == 'I') {
                 abecedario[8]++;
-            }else if(car == 'j' || car =='J'){
+            } else if (car == 'j' || car == 'J') {
                 abecedario[9]++;
-            }else if(car == 'k' || car =='K'){
+            } else if (car == 'k' || car == 'K') {
                 abecedario[10]++;
-            }else if(car == 'l' || car =='L'){
+            } else if (car == 'l' || car == 'L') {
                 abecedario[11]++;
-            }else if(car == 'm' || car =='M'){
+            } else if (car == 'm' || car == 'M') {
                 abecedario[12]++;
-            }else if(car == 'n' || car =='N'){
+            } else if (car == 'n' || car == 'N') {
                 abecedario[13]++;
-            }else if(car == 'ñ' || car =='Ñ'){
+            } else if (car == 'ñ' || car == 'Ñ') {
                 abecedario[14]++;
-            }else if(car == 'o' || car =='O'){
+            } else if (car == 'o' || car == 'O') {
                 abecedario[15]++;
-            }else if(car == 'p' || car =='P'){
+            } else if (car == 'p' || car == 'P') {
                 abecedario[16]++;
-            }else if(car == 'q' || car =='Q'){
+            } else if (car == 'q' || car == 'Q') {
                 abecedario[17]++;
-            }else if(car == 'r' || car =='R'){
+            } else if (car == 'r' || car == 'R') {
                 abecedario[18]++;
-            }else if(car == 's' || car =='S'){
+            } else if (car == 's' || car == 'S') {
                 abecedario[19]++;
-            }else if(car == 't' || car =='T'){
+            } else if (car == 't' || car == 'T') {
                 abecedario[20]++;
-            }else if(car == 'u' || car =='U'){
+            } else if (car == 'u' || car == 'U') {
                 abecedario[21]++;
-            }else if(car == 'v' || car =='V'){
+            } else if (car == 'v' || car == 'V') {
                 abecedario[22]++;
-            }else if(car == 'w' || car =='W'){
+            } else if (car == 'w' || car == 'W') {
                 abecedario[23]++;
-            }else if(car == 'x' || car =='X'){
+            } else if (car == 'x' || car == 'X') {
                 abecedario[24]++;
-            }else if(car == 'y' || car =='Y'){
+            } else if (car == 'y' || car == 'Y') {
                 abecedario[25]++;
-            }else if(car == 'z' || car =='Z'){
+            } else if (car == 'z' || car == 'Z') {
                 abecedario[26]++;
             }
             car = llegirc();
-    }
-        
-        
-        
+        }
+
         return abecedario;
     }
+
     //Palabra mas repetida
-    public int MesRepetidaPal(int a[], int b) throws IOException{
+    public int[] MesRepetidaPal(int a[], int b) throws IOException {
         BibliotecaParaules biblio = new BibliotecaParaules();
-        int ParaulesT = b;
-        int paraules[]= new int[a.length];
+        int ParaulesRepetides[] =  new int[a.length];
+        int paraules[] = new int[a.length];
         paraules = a;
-        int i=0;
-        for(int j=1; j<a.length; j++){
-         
-            if(paraules[i]<paraules[j]){
+        int i = 0;
+        int idx = 0;
+        for (int j = 1; j < a.length; j++) {
+
+            if (paraules[i] < paraules[j]) {
                 i = j;
+            }else if(paraules[i]==paraules[j]){
+                ParaulesRepetides[idx++] = i;
+                ParaulesRepetides[idx++] = j;
+                i++;
             }
         }
         br.reset();
-        return i;
+        return ParaulesRepetides;
     }
-    
 
-    
     //lletra mes repetida
-    public int MesRepetidaLl(int a[]) throws IOException{
-        int abecedario[]=new int[27];
+    public int MesRepetidaLl(int a[]) throws IOException {
+        int abecedario[] = new int[27];
         abecedario = a;
-        int i=0;
-        for(int j=1; j<27; j++){
-         
-            if(abecedario[i]<abecedario[j]){
+        int i = 0;
+        for (int j = 1; j < 27; j++) {
+
+            if (abecedario[i] < abecedario[j]) {
                 i = j;
             }
         }
-        
-        
-        return i;        
+
+        return i;
     }
+
     //Columna de la paraula
-    public int colPal(Paraula a){
+    public int colPal(Paraula a) {
         Paraula aux = a;
         int colPal;
         colPal = col - aux.ind;
         return colPal;
     }
+
     //reset de l'arxiu
-    public void resetA() throws IOException{
+    public void resetA() throws IOException {
         br.reset();
     }
+
     //setLin
-    public void setLin(int a){
+    public void setLin(int a) {
         lin = a;
     }
+
     //setCol
-    public void setCol(int a){
+    public void setCol(int a) {
         col = a;
     }
+
     //getLin
     public int getLin() {
         return lin;
     }
-    public long getTamañoAr(){
+
+    //getCol
+    public int getCol() {
+        return col;
+    }
+
+    public long getTamañoAr() {
         long tam = f.length();
         return tam;
     }
+
     //Tancar fitxer
     public void close() throws IOException {
         fr.close();
