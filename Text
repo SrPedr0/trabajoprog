@@ -10,20 +10,25 @@ package parctica_prog;
  * @author pedro
  */
 public class Text {
-    //ATRIBUTS
 
-    char text[];
-    int ind;
-    int idx;
-    int idx2;
-    int capacitat = 300;
-    int TRAM = 100;
+    //ATRIBUTS
+    int lin;
+    int col;
+    private char text[];
+    private int ind;
+    private int idx;
+    private int idx2;
+    private int capacitat = 30000;
+    private int TRAM = 30000;
+
     //CONSTRUCTORS
     public Text() {
         text = new char[capacitat];
         ind = 0;
         idx = 0;
-        idx2= 0;
+        idx2 = 0;
+        lin = 1;
+        col = 1;
     }
 
     public Text(char a[]) {
@@ -31,65 +36,85 @@ public class Text {
         text = new char[capacitat];
         ind = 0;
         idx = 0;
-        idx2= 0;
-        for (int i=0;i<a.length;i++){
+        idx2 = 0;
+        lin = 1;
+        col = 1;
+        for (int i = 0; i < a.length; i++) {
             text[ind++] = a[i];
         }
     }
+
     //METODES
     //Afeigir un caracter a un (text) --> char array + indicador)
-    public void afeigir(char c){
-       if (ind == capacitat){
-           char aux[] = new char[capacitat + TRAM];
-           for (int i=0;i<ind;i++){
-           aux[i] = text[i];
-           }
-           capacitat = capacitat + TRAM;
-           text = aux;    
-       }else{
-           text[ind++] = c;
-       } 
+    public void afeigir(char c) {
+        if (ind == capacitat) {
+            char aux[] = new char[capacitat + TRAM];
+            for (int i = 0; i < ind; i++) {
+                aux[i] = text[i];
+            }
+            capacitat = capacitat + TRAM;
+            text = aux;
+        } else {
+            text[ind++] = c;
+        }
     }
+
     //text igual?
-    public boolean Tigual(Text b){
+    public boolean Tigual(Text b) {
         boolean res = true;
-        for(int i=0;(i<ind)&&(res);i++){
-        res = text[i] == b.text[b.idx2];
-        b.idx2++;
-       }
-       return res;
-    }
-    public boolean TBuid(){
-        return ind == 0;
-    }
-
-    public Paraula agafarParauladeText(){
-        Paraula aux = new Paraula();
-        BotarBlancsIMES();
-        while(text[idx] > 32 && idx<text.length){
-            aux.afeigir(text[idx]);
-            idx++;
-        }
-        idx2 = idx-aux.ind;
-        return aux;
-    }
-
-    public void BotarBlancsIMES(){
-        while(text[idx]<33 && idx<text.length-1){
-            idx++;
-        }
-    }
-    
-        @Override
-    public String toString(){
-        String res = "";
-        for (int i=0;i<ind;i++){
-            res+= text[i];
+        for (int i = 0; (i < ind) && (res); i++) {
+            res = text[i] == b.text[b.idx2];
+            b.idx2++;
         }
         return res;
     }
-    
-    
 
-   
+    public boolean TBuid() {
+        return ind == 0;
+    }
+
+    public Paraula agafarParauladeText() {
+
+        Paraula aux = new Paraula();
+        BotarBlancsIMES();
+        while (text[idx] > 32 && idx < text.length) {
+            aux.afeigir(text[idx]);
+            idx++;
+            col++;
+        }
+
+        idx2 = idx - aux.ind;
+        return aux;
+    }
+
+    public void BotarBlancsIMES() {
+        while (text[idx] < 33 && idx < text.length - 1) {
+            idx++;
+            col++;
+            if (text[idx] == 10) {
+                lin++;
+                col = 0;
+            }
+        }
+    }
+
+    //setLin
+    public void setLin(int a) {
+        lin = a;
+    }
+
+    //setCol
+    public void setCol(int a) {
+        col = a;
+    }
+
+    @Override
+    public String toString() {
+        String res = "";
+        for (int i = 0; i < ind; i++) {
+            res += text[i];
+        }
+        return res;
+    }
+
 }
