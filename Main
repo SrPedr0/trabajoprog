@@ -23,7 +23,7 @@ public class Parctica_prog {
     private FitxerIN fitxIN;
     private Character c = ' ';
     private int ParaulesT;
-    private int col;
+    private int col=1;
     private int llavor;
 
     public void Inicio() throws IOException {
@@ -31,11 +31,19 @@ public class Parctica_prog {
         Presentacio();
         Fitxer = AnalisisNomFitx();
         fitxIN = new FitxerIN(Fitxer);
+        ParaulesT = fitxIN.ParaulesT();
+        while(ParaulesT>500){
+            System.out.println("ERROR!!! Arxiu amb més de 500 paraules!");
+            Fitxer = AnalisisNomFitx();
+            fitxIN = new FitxerIN(Fitxer);
+            ParaulesT = fitxIN.ParaulesT();
+        }
+        
         while (c != 115) {
             Switch(MenuPrincipal());
         }
-        fitxIN.close();
-
+        
+       
     }
 
     public void Presentacio() {
@@ -51,7 +59,7 @@ public class Parctica_prog {
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
         System.out.println("***********************************************************************************");
         System.out.println("* Nom fitxer: " + Fitxer.toString() + "                          Caracters totals: " + fitxIN.CaractersT());
-        ParaulesT = fitxIN.ParaulesT();
+        
         System.out.println("*                                                       Paraules totals: " + ParaulesT);
         System.out.println("*                                                    Línies totals: " + fitxIN.getLin());
         System.out.println("Quina opció elegiu?");
@@ -189,9 +197,15 @@ public class Parctica_prog {
         }
         Paraula pal[] = biblio.getTrobades();
         int comptador[] = biblio.getAparicionsPal();
-        int valor = fitxIN.MesRepetidaPal(comptador, ParaulesT);
-        comptador[valor]++;
-        System.out.println("La paraula mes repetida es " + pal[valor] + " i surt un total de " + comptador[valor] + " vegades");
+        int valor[] = fitxIN.MesRepetidaPal(comptador);
+        for(int i=0;i<valor.length;i++){
+            comptador[i]++;
+        }
+        for(int i=0;i<valor.length;i++){
+           if(valor[i]!=999999999){
+           System.out.println("La paraula mes repetida es " + pal[valor[i]] + " i surt un total de " + comptador[valor[i]] + " vegades");
+        }
+        }   
     }
 
     //Metodo que nos encuentra la palabra introducida es el apartado 4 del menu principal
@@ -257,7 +271,6 @@ public class Parctica_prog {
         CodDes Des = new CodDes();
         Des.PrepararCodificacio();
         Des.descodificar(Fitxer);
-
     }
 
     //Metodo que crea el abecedario español
@@ -281,3 +294,4 @@ public class Parctica_prog {
     }
 
 }
+
