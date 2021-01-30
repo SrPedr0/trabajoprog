@@ -25,6 +25,8 @@ public class Parctica_prog {
     private int ParaulesT;
     private int col=1;
     private int llavor;
+    private int z = 0;
+    private CodDes Des;
 
     public void Inicio() throws IOException {
 
@@ -261,16 +263,23 @@ public class Parctica_prog {
 
     //Metodo que nos codifica el archivo es el apartado 7 del menu principal
     public void Codificar() throws IOException {
-        CodDes Cod = new CodDes();
-        Cod.PrepararCodificacio();
-        Cod.codificar(Fitxer);
+        //Z = 0 cuando EstablirLlavor() no se ha ejecutado y, por tanto, nos pide una semilla
+        if (z == 0) {
+            Des = new CodDes();
+            Des.PrepararCodificacio();
+            Des.codificar(Fitxer);
+        } 
+        //z = 1 cuando EstablirLLavor() se ha ejecutado
+        else if (z == 1){
+            Des.codificar(Fitxer);
+        }
     }
 
-    //Metodo que nos permite modificar el valor de la semilla del random
+    //Metodo que nos permite modificar el valor de la semilla del random es el apartado 8 del menu principal
     public void EstablirLLavor() throws IOException {
-        CodDes Des = new CodDes();
+        Des = new CodDes();
         Des.PrepararCodificacio();
-        Des.descodificar(Fitxer);
+        z++;
     }
 
     //Metodo que crea el abecedario español
@@ -294,4 +303,3 @@ public class Parctica_prog {
     }
 
 }
-
