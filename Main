@@ -263,7 +263,7 @@ public class Parctica_prog {
 
     //Metodo que nos codifica el archivo es el apartado 7 del menu principal
     public void Codificar() throws IOException {
-        //Z = 0 cuando EstablirLlavor() no se ha ejecutado y, por tanto, nos pide una semilla
+        //z = 0 cuando EstablirLlavor() no se ha ejecutado y, por tanto, nos pide una semilla
         if (z == 0) {
             Des = new CodDes();
             Des.PrepararCodificacio();
