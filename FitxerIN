@@ -112,6 +112,7 @@ public class FitxerIN {
 
             aux = llegirP();
         }
+        br.reset();
         return comptPal;
     }
 
@@ -185,26 +186,35 @@ public class FitxerIN {
     }
 
     //Palabra mas repetida
-    public int[] MesRepetidaPal(int a[], int b) throws IOException {
-        BibliotecaParaules biblio = new BibliotecaParaules();
-        int ParaulesRepetides[] =  new int[a.length];
+    public int[] MesRepetidaPal(int a[]) throws IOException {
+        
+        int ParaulesRepetides[] = new int[a.length];
         int paraules[] = new int[a.length];
         paraules = a;
-        int i = 0;
-        int idx = 0;
-        for (int j = 1; j < a.length; j++) {
-
-            if (paraules[i] < paraules[j]) {
-                i = j;
-            }else if(paraules[i]==paraules[j]){
-                ParaulesRepetides[idx++] = i;
-                ParaulesRepetides[idx++] = j;
-                i++;
+        int i=0;
+        int z = 0;
+        for(int x=0;x<a.length;x++){
+            ParaulesRepetides[x]= 999999999;
+        }
+        for (int j=1;j<a.length;j++){
+            if(paraules[i]<paraules[j]){
+                i=j; 
+        }
+        }
+        
+        ParaulesRepetides[z++]= i;
+        
+        for(int idx=0;idx<a.length;idx++){
+            if(paraules[idx]==paraules[i]&& i!=idx){
+                ParaulesRepetides[z++] = idx;
             }
         }
+        
         br.reset();
         return ParaulesRepetides;
     }
+        
+    
 
     //lletra mes repetida
     public int MesRepetidaLl(int a[]) throws IOException {
