@@ -21,12 +21,13 @@ public class Parctica_prog {
     private Paraula Fitxer;
     private LT tec = new LT();
     private FitxerIN fitxIN;
+    private Paraula opcio= null;
+    private Paraula posiblesOpcions[];
     private Character c = ' ';
     private int ParaulesT;
     private int col=1;
     private int llavor;
-    private int z = 0;
-    private CodDes Des;
+    private int ParaulesMAX = 500;
 
     public void Inicio() throws IOException {
 
@@ -34,18 +35,11 @@ public class Parctica_prog {
         Fitxer = AnalisisNomFitx();
         fitxIN = new FitxerIN(Fitxer);
         ParaulesT = fitxIN.ParaulesT();
-        while(ParaulesT>500){
-            System.out.println("ERROR!!! Arxiu amb més de 500 paraules!");
-            Fitxer = AnalisisNomFitx();
-            fitxIN = new FitxerIN(Fitxer);
-            ParaulesT = fitxIN.ParaulesT();
-        }
-        
-        while (c != 115) {
+        PosOPC();
+        while (!opcio.iguals(posiblesOpcions[11])) {
             Switch(MenuPrincipal());
         }
-        
-       
+
     }
 
     public void Presentacio() {
@@ -55,7 +49,7 @@ public class Parctica_prog {
 
     }
 
-    public Character MenuPrincipal() throws IOException {
+    public Paraula MenuPrincipal() throws IOException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("***********************************************************************************");
         System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
@@ -74,10 +68,20 @@ public class Parctica_prog {
         System.out.println("7 Codificar");
         System.out.println("8 Establir llavor");
         System.out.println("9 Establir tope de paraules");
+        System.out.println("10 Substituició de paraula");
         System.out.println("s Sortir");
         System.out.print("Introdueix la teva opció: ");
-        c = AnalisisOpcio();
-        return c;
+        opcio = AnalisisOpcio();
+        return opcio;
+    }
+    public void TopeParaules() throws IOException{
+        while(ParaulesT>ParaulesMAX){
+            System.out.println("ERROR!!! Arxiu amb més de " + ParaulesMAX+ " paraules!");
+            Fitxer = AnalisisNomFitx();
+            fitxIN = new FitxerIN(Fitxer);
+            ParaulesT = fitxIN.ParaulesT();
+        }
+        
     }
 
     public Paraula AnalisisNomFitx() {
@@ -101,21 +105,21 @@ public class Parctica_prog {
         return Fitxer;
     }
 
-    public char AnalisisOpcio() throws IOException {
-
-        c = tec.llegirCaracter();
-        while ((c.charValue() < '1' || c.charValue() > '9') && c != 's') {
+    public Paraula AnalisisOpcio() throws IOException {
+        
+        opcio = new Paraula(tec.llegirLiniaA());
+        while (!opcio.iguals(posiblesOpcions[0])||!opcio.iguals(posiblesOpcions[1])||!opcio.iguals(posiblesOpcions[2])||!opcio.iguals(posiblesOpcions[3])||!opcio.iguals(posiblesOpcions[4])||!opcio.iguals(posiblesOpcions[5])||!opcio.iguals(posiblesOpcions[6])||!opcio.iguals(posiblesOpcions[7])||!opcio.iguals(posiblesOpcions[8])||!opcio.iguals(posiblesOpcions[9])||!opcio.iguals(posiblesOpcions[10])) {
             System.out.print("Pareix que hi ha un error introduiex una opcio:  ");
-            c = tec.llegirCaracter();
+            opcio = new Paraula(tec.llegirLiniaA());
         }
         fitxIN.resetA();
-        return c;
+        
+        return opcio;
     }
 
-    public void Switch(Character op) throws IOException {
+    public void Switch(Paraula op) throws IOException {
 
-        switch (op) {
-            case '1':
+            if(op.iguals(posiblesOpcions[0])){
                 System.out.println("\n\n\n\n");
                 System.out.println("****************************************************************************");
                 System.out.println("              Lletra mes repetida               ");
@@ -123,51 +127,55 @@ public class Parctica_prog {
                 System.out.println("Nom fitxer: " + Fitxer.toString() + "\n");
                 LletraMesRepetida();
                 fitxIN.resetA();
-                break;
+            }
 
-            case '2':
+            if(op.iguals(posiblesOpcions[1])){
                 System.out.println("\n\n\n\n");
                 AparicionsCaracters();
                 fitxIN.resetA();
-                break;
+            }
 
-            case '3':
+            if(op.iguals(posiblesOpcions[2])){
                 System.out.println("\n\n\n\n");
                 ParaulaMesRepetida();
-                break;
-            case '4':
+            }
+            if(op.iguals(posiblesOpcions[3])){
                 System.out.print("Introdueix la paraula a cercar: ");
                 paraulaCerca = tec.llegirLiniaA();
                 System.out.println("\n\n\n\n");
                 CercarParaula();
                 fitxIN.resetA();
-                break;
-            case '5':
+            }
+            if(op.iguals(posiblesOpcions[4])){
                 System.out.print("Introdueix el text a cercar: ");
                 text = tec.llegirLiniaA();
                 System.out.println("\n\n\n\n");
                 CercarText();
                 fitxIN.resetA();
-                break;
-            case '6':
+            }
+            if(op.iguals(posiblesOpcions[5])){
                 System.out.println("\n\n\n\n");
                 ParaulesSeguides();
                 fitxIN.resetA();
-                break;
-            case '7':
+            }
+            if(op.iguals(posiblesOpcions[6])){
                 System.out.println("\n\n\n\n");
                 Codificar();
-                break;
-            case '8':
+            }
+            if(op.iguals(posiblesOpcions[7])){
                 System.out.println("\n\n\n\n");
                 EstablirLLavor();
-                break;
-            case '9':
-                break;
+            }
+            if(op.iguals(posiblesOpcions[8])){
+                TopeDePal();
+            
+            }
+}
 
-        }
 
-    }
+        
+
+    
 
     //Metodo que nos indica cual es la letra mas repetida del txt es el apartado 1 del menu principal
     public void LletraMesRepetida() throws FileNotFoundException, IOException {
@@ -263,23 +271,51 @@ public class Parctica_prog {
 
     //Metodo que nos codifica el archivo es el apartado 7 del menu principal
     public void Codificar() throws IOException {
-        //z = 0 cuando EstablirLlavor() no se ha ejecutado y, por tanto, nos pide una semilla
-        if (z == 0) {
-            Des = new CodDes();
-            Des.PrepararCodificacio();
-            Des.codificar(Fitxer);
-        } 
-        //z = 1 cuando EstablirLLavor() se ha ejecutado
-        else if (z == 1){
-            Des.codificar(Fitxer);
-        }
+        CodDes Cod = new CodDes();
+        Cod.PrepararCodificacio(llavor);
+        Cod.codificar(Fitxer);
     }
 
-    //Metodo que nos permite modificar el valor de la semilla del random es el apartado 8 del menu principal
+    //Metodo que nos permite modificar el valor de la semilla del random
     public void EstablirLLavor() throws IOException {
-        Des = new CodDes();
-        Des.PrepararCodificacio();
-        z++;
+        CodDes Des = new CodDes();
+        llavor = Des.Llavor();
+    }
+    //Establir tope de Paraules
+    public void TopeDePal() throws IOException{
+        System.out.print("Indica quin serà el nou tope de paraules: ");
+        ParaulesMAX = tec.llegirSencer();
+        Fitxer = AnalisisNomFitx();
+        fitxIN = new FitxerIN(Fitxer);
+        ParaulesT = fitxIN.ParaulesT();
+        TopeParaules();
+        while (c != 115) {
+            Switch(MenuPrincipal());
+        }   
+       
+    }
+    //Substituició de paraules d'un arxiu de text
+    public void SubstPal() throws IOException{
+        FitxerOUT fitxOUT = new FitxerOUT(Fitxer);
+        System.out.print("Quina es la paraula que vols substituir? ");
+        Paraula antiga = new Paraula(tec.llegirLiniaA());
+        System.out.println("I per quina paraula vols substituirla? ");
+        Paraula nova = new Paraula(tec.llegirLiniaA());
+        Paraula llegirp = new Paraula();
+        Character c = fitxIN.llegirc();
+        while(c != null){
+            
+            if(c == ' '){
+                fitxOUT.gravarC(c);
+            }else{
+                llegirp= fitxIN.llegirP();
+                if(llegirp.iguals(antiga)){
+                    fitxOUT.gravarP(nova.paraula);
+                }          
+            }
+            
+            c = fitxIN.llegirc();    
+        }  
     }
 
     //Metodo que crea el abecedario español
@@ -296,6 +332,21 @@ public class Parctica_prog {
             j++;
         }
         return abc;
+    }
+    public void PosOPC(){
+        posiblesOpcions = new Paraula[11];
+        posiblesOpcions[0].afeigir('1');
+        posiblesOpcions[1].afeigir('2');
+        posiblesOpcions[2].afeigir('3');
+        posiblesOpcions[3].afeigir('4');
+        posiblesOpcions[4].afeigir('5');      
+        posiblesOpcions[5].afeigir('6');        
+        posiblesOpcions[6].afeigir('7');      
+        posiblesOpcions[7].afeigir('8');       
+        posiblesOpcions[8].afeigir('9');       
+        posiblesOpcions[9].afeigir('1');
+        posiblesOpcions[9].afeigir('0');        
+        posiblesOpcions[10].afeigir('s');
     }
 
     public static void main(String[] args) throws IOException {
