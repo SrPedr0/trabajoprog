@@ -36,10 +36,9 @@ public class Parctica_prog {
         fitxIN = new FitxerIN(Fitxer);
         ParaulesT = fitxIN.ParaulesT();
         PosOPC();
-        while (!opcio.iguals(posiblesOpcions[11])) {
+        do{
             Switch(MenuPrincipal());
-        }
-
+        } while(!opcio.iguals(posiblesOpcions[9]));          
     }
 
     public void Presentacio() {
@@ -68,7 +67,6 @@ public class Parctica_prog {
         System.out.println("7 Codificar");
         System.out.println("8 Establir llavor");
         System.out.println("9 Establir tope de paraules");
-        System.out.println("10 Substituició de paraula");
         System.out.println("s Sortir");
         System.out.print("Introdueix la teva opció: ");
         opcio = AnalisisOpcio();
@@ -108,8 +106,9 @@ public class Parctica_prog {
     public Paraula AnalisisOpcio() throws IOException {
         
         opcio = new Paraula(tec.llegirLiniaA());
-        while (!opcio.iguals(posiblesOpcions[0])||!opcio.iguals(posiblesOpcions[1])||!opcio.iguals(posiblesOpcions[2])||!opcio.iguals(posiblesOpcions[3])||!opcio.iguals(posiblesOpcions[4])||!opcio.iguals(posiblesOpcions[5])||!opcio.iguals(posiblesOpcions[6])||!opcio.iguals(posiblesOpcions[7])||!opcio.iguals(posiblesOpcions[8])||!opcio.iguals(posiblesOpcions[9])||!opcio.iguals(posiblesOpcions[10])) {
+        while (!opcio.iguals(posiblesOpcions[0])&&!opcio.iguals(posiblesOpcions[1])&&!opcio.iguals(posiblesOpcions[2])&&!opcio.iguals(posiblesOpcions[3])&&!opcio.iguals(posiblesOpcions[4])&&!opcio.iguals(posiblesOpcions[5])&&!opcio.iguals(posiblesOpcions[6])&&!opcio.iguals(posiblesOpcions[7])&&!opcio.iguals(posiblesOpcions[8])&&!opcio.iguals(posiblesOpcions[9])) {
             System.out.print("Pareix que hi ha un error introduiex una opcio:  ");
+            
             opcio = new Paraula(tec.llegirLiniaA());
         }
         fitxIN.resetA();
@@ -294,30 +293,6 @@ public class Parctica_prog {
         }   
        
     }
-    //Substituició de paraules d'un arxiu de text
-    public void SubstPal() throws IOException{
-        FitxerOUT fitxOUT = new FitxerOUT(Fitxer);
-        System.out.print("Quina es la paraula que vols substituir? ");
-        Paraula antiga = new Paraula(tec.llegirLiniaA());
-        System.out.println("I per quina paraula vols substituirla? ");
-        Paraula nova = new Paraula(tec.llegirLiniaA());
-        Paraula llegirp = new Paraula();
-        Character c = fitxIN.llegirc();
-        while(c != null){
-            
-            if(c == ' '){
-                fitxOUT.gravarC(c);
-            }else{
-                llegirp= fitxIN.llegirP();
-                if(llegirp.iguals(antiga)){
-                    fitxOUT.gravarP(nova.paraula);
-                }          
-            }
-            
-            c = fitxIN.llegirc();    
-        }  
-    }
-
     //Metodo que crea el abecedario español
     public char[] abecedarioES() {
         char abc[] = new char[27];
@@ -334,19 +309,20 @@ public class Parctica_prog {
         return abc;
     }
     public void PosOPC(){
-        posiblesOpcions = new Paraula[11];
-        posiblesOpcions[0].afeigir('1');
-        posiblesOpcions[1].afeigir('2');
-        posiblesOpcions[2].afeigir('3');
-        posiblesOpcions[3].afeigir('4');
-        posiblesOpcions[4].afeigir('5');      
-        posiblesOpcions[5].afeigir('6');        
-        posiblesOpcions[6].afeigir('7');      
-        posiblesOpcions[7].afeigir('8');       
-        posiblesOpcions[8].afeigir('9');       
-        posiblesOpcions[9].afeigir('1');
-        posiblesOpcions[9].afeigir('0');        
-        posiblesOpcions[10].afeigir('s');
+    posiblesOpcions = new Paraula[10];
+    for(int i=0;i<10;i++){
+        posiblesOpcions[i] = new Paraula();
+    }
+    posiblesOpcions[0].afeigir('1');
+    posiblesOpcions[1].afeigir('2');
+    posiblesOpcions[2].afeigir('3');
+    posiblesOpcions[3].afeigir('4');
+    posiblesOpcions[4].afeigir('5');
+    posiblesOpcions[5].afeigir('6');
+    posiblesOpcions[6].afeigir('7');
+    posiblesOpcions[7].afeigir('8');
+    posiblesOpcions[8].afeigir('9');
+    posiblesOpcions[9].afeigir('s');                
     }
 
     public static void main(String[] args) throws IOException {
@@ -354,3 +330,4 @@ public class Parctica_prog {
     }
 
 }
+
