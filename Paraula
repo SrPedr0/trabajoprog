@@ -60,8 +60,8 @@ public class Paraula {
     //Comprobar si es un arxiu codificat
     public boolean codificar(Paraula a){
         boolean res = true;
-        int j=2;
-        for(int i= ind;i<ind-7&&res;i--){
+        int j=6;
+        for(int i = ind-1;(i>ind-8)&&(res);i--){
             res = paraula[i] == a.paraula[j];
             j--;
         }
