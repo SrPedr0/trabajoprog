@@ -38,18 +38,14 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         finestra = FinestraDMI.crear(this, 1080, 720);
         finestra.posarDibuix(0, 0, "imatges/titulo.png", 1080, 720);
         Fitxer = AnalisisNomFitx();
-
         fitxIN = new FitxerIN(Fitxer);
         ParaulesT = fitxIN.ParaulesT();
         PosOPC();
         COD();
-        System.out.println(Fitxer);
-        System.out.println(cod);
-        System.out.println(Fitxer.codificar(cod));
         if (Fitxer.codificar(cod)) {
             do {
                 System.out.println("Has introduit un fitxer codificat,");
-                finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
+                finestra.posarDibuix(0, 0, "imatges/llavor.png", 1080, 720);
                 EstablirLLavor();
                 decodFitx();
                 finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
@@ -59,20 +55,21 @@ public class PracticaProgGUI implements FinestraDMIInterf {
                 finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
                 finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
                 finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
-                Switch(AnalisisOpcio());
+                SwitchCod(AnalisisOpcio());
 
             } while (!opcio.iguals(posiblesOpcions[9]));
         } else {
-            finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
-            finestra.posarText(855, 476, Fitxer.toString(), 1, 138, 122, 101);
-            finestra.posarText(931, 453, ParaulesMAX + "", 1, 138, 122, 101);
-            finestra.posarText(968, 498, fitxIN.CaractersT() + "", 1, 138, 122, 101);
-            finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
-            finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
-            finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
-            Switch(AnalisisOpcio());
+
             do {
-                SwitchCod(AnalisisOpcio());
+                finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
+                finestra.posarText(855, 476, Fitxer.toString(), 1, 138, 122, 101);
+                finestra.posarText(931, 453, ParaulesMAX + "", 1, 138, 122, 101);
+                finestra.posarText(968, 498, fitxIN.CaractersT() + "", 1, 138, 122, 101);
+                finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
+                finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
+                finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
+                Switch(AnalisisOpcio());
+
             } while (!opcio.iguals(posiblesOpcions[9]));
         }
     }
@@ -123,7 +120,7 @@ public class PracticaProgGUI implements FinestraDMIInterf {
             //Fitxer = new Paraula(tec.llegirLiniaA());
             s = finestra.agafar("");
             Fitxer = new Paraula(s.toCharArray());
-            System.out.println(Fitxer);
+
             if (Fitxer != null) {
                 fil = new File(Fitxer.toString());
                 if (!fil.exists()) {
@@ -393,8 +390,24 @@ public class PracticaProgGUI implements FinestraDMIInterf {
 
     //Metodo que nos permite modificar el valor de la semilla del random
     public void EstablirLLavor() throws IOException {
-        CodDes Des = new CodDes();
-        llavor = Des.Llavor();
+        llavor = Llavor();
+    }
+
+    public int Llavor() {
+
+        LT tec = new LT();
+        Integer semilla = -1;
+        while (semilla <= -1) {
+            semilla = Integer.parseInt(finestra.agafar(""));
+            //System.out.print("  Introdueix el valor de la llavor  (nombre entre 0 i 9999): ");
+
+            if ((semilla == null) || (semilla <= -1) || (semilla > 10000)) {
+                finestra.escriure("ERROR!!!! Llavor incorrecta");
+                //System.out.println("ERROR!!!! Llavor incorrecta");
+                semilla = -1;
+            }
+        }
+        return semilla;
     }
 
     //Establir tope de Paraules
@@ -457,7 +470,8 @@ public class PracticaProgGUI implements FinestraDMIInterf {
     public void decodFitx() throws IOException {
         CodDes Cod = new CodDes();
         Cod.PrepararCodificacio(llavor);
-        Cod.descodificar(new Paraula("temp".toCharArray()));
+        Cod.descodificar(Fitxer);
+        fitxIN  =new FitxerIN(Fitxer.PerCodificar());
     }
 
     public static void main(String[] args) throws IOException {
@@ -469,4 +483,3 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         finestra.escriureln("Has picat la coordenada (" + r.getX() + "," + r.getY() + ")");
     }
 }
-
