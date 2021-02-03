@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package parctica_prog;
+package practicaproggui;
 
 /**
  *
@@ -12,7 +12,7 @@ package parctica_prog;
 public class Paraula {
 
     // ATRIBUTS
-    private char paraula[];
+    char paraula[];
     int ind;
     private int capacitat = 25;
     private int TRAM = 10;
@@ -48,6 +48,7 @@ public class Paraula {
         }
     }
 
+
     //Comprobar si son iguals
     public boolean iguals(Paraula a) {
         boolean res = ind == a.ind;
@@ -55,6 +56,16 @@ public class Paraula {
             res = paraula[i] == a.paraula[i];
         }
         return res;
+    }
+    //Comprobar si es un arxiu codificat
+    public boolean codificar(Paraula a){
+        boolean res = true;
+        int j=2;
+        for(int i= ind;i<ind-7&&res;i--){
+            res = paraula[i] == a.paraula[j];
+            j--;
+        }
+    return res;           
     }
 
     //Paraula amb zero lletres buida
@@ -87,4 +98,3 @@ public class Paraula {
     }
 
 }
-
