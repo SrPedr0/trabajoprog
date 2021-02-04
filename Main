@@ -242,7 +242,7 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         if (op.iguals(posiblesOpcions[6])) {
             System.out.println("\n\n\n\n");
             Codificar();
-            finestra.escriure("Codificat amb èxit");
+            finestra.escriureln("Codificat amb èxit");
         }
         if (op.iguals(posiblesOpcions[7])) {
             System.out.println("\n\n\n\n");
@@ -477,7 +477,7 @@ public class PracticaProgGUI implements FinestraDMIInterf {
 
         } else {
             codif = false;
-            fich = new File(Fitxer.toString());
+            
             do {
                 finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
                 finestra.posarText(855, 476, fitxerANT.toString(), 1, 138, 122, 101);
@@ -489,6 +489,10 @@ public class PracticaProgGUI implements FinestraDMIInterf {
                 Switch(AnalisisOpcio());
 
             } while (!opcio.iguals(posiblesOpcions[9]));
+            fich = new File(Fitxer.toString());
+            fitxIN.close();
+            fich.delete();
+            finestra.agafar("Esborrat, has de reiniciar el programa.");
         }
     }
 
@@ -533,7 +537,8 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         CodDes Cod = new CodDes();
         Cod.PrepararCodificacio(llavor);
         Cod.codificar(Fitxer);
-        decodFitx();    
+        decodFitx();
+        finestra.escriureln("Si vols esborrar la copia de l'arxiu decodificat pulsa s, si no vols pulsa la creu per sortir i guardar-lo.");
         
     }
 
