@@ -5,10 +5,10 @@
  */
 package practicaproggui;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javafx.scene.paint.Color;
 import profesoratprimer.FinestraDMI;
 import profesoratprimer.FinestraDMIInterf;
 import profesoratprimer.RatoliDMI;
@@ -24,7 +24,9 @@ public class PracticaProgGUI implements FinestraDMIInterf {
     private char paraulaCerca[];
     private Paraula Fitxer;
     private LT tec = new LT();
+    private boolean codif;
     private FitxerIN fitxIN;
+    private FitxerIN codifIN;
     private Paraula opcio = null;
     private Paraula posiblesOpcions[];
     private int ParaulesT;
@@ -34,75 +36,12 @@ public class PracticaProgGUI implements FinestraDMIInterf {
     private Paraula cod;
 
     private void inicio() throws IOException {
-
-        finestra = FinestraDMI.crear(this, 1080, 720);
-        finestra.posarDibuix(0, 0, "imatges/titulo.png", 1080, 720);
-        Fitxer = AnalisisNomFitx();
-        fitxIN = new FitxerIN(Fitxer);
-        ParaulesT = fitxIN.ParaulesT();
-        PosOPC();
-        COD();
-        if (Fitxer.codificar(cod)) {
-            do {
-                System.out.println("Has introduit un fitxer codificat,");
-                finestra.posarDibuix(0, 0, "imatges/llavor.png", 1080, 720);
-                EstablirLLavor();
-                decodFitx();
-                finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
-                finestra.posarText(855, 476, Fitxer.toString(), 1, 138, 122, 101);
-                finestra.posarText(931, 453, ParaulesMAX + "", 1, 138, 122, 101);
-                finestra.posarText(968, 498, fitxIN.CaractersT() + "", 1, 138, 122, 101);
-                finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
-                finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
-                finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
-                SwitchCod(AnalisisOpcio());
-
-            } while (!opcio.iguals(posiblesOpcions[9]));
-        } else {
-
-            do {
-                finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
-                finestra.posarText(855, 476, Fitxer.toString(), 1, 138, 122, 101);
-                finestra.posarText(931, 453, ParaulesMAX + "", 1, 138, 122, 101);
-                finestra.posarText(968, 498, fitxIN.CaractersT() + "", 1, 138, 122, 101);
-                finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
-                finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
-                finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
-                Switch(AnalisisOpcio());
-
-            } while (!opcio.iguals(posiblesOpcions[9]));
-        }
+       menu();
     }
-
-    /*
-    public Paraula MenuPrincipal() throws IOException {
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println("***********************************************************************************");
-        System.out.println("*                           MENÚ PRINCIPAL DEL PROGRAMA                           *");
-        System.out.println("***********************************************************************************");
-        System.out.println("* Nom fitxer: " + Fitxer.toString() + "                          Caracters totals: " + fitxIN.CaractersT());
-        
-        System.out.println("*                                                       Paraules totals: " + ParaulesT);
-        System.out.println("*                                                    Línies totals: " + fitxIN.getLin());
-        System.out.println("Quina opció elegiu?");
-        System.out.println("1 Lletra més repetida i nombre d'aparicions");
-        System.out.println("2 Nombre d'aparicions de cada caràcter");
-        System.out.println("3 Paraula més repetida i nombre d'aparicions");
-        System.out.println("4 Cercar paraula");
-        System.out.println("5 Cercar text");
-        System.out.println("6 Paraules repetides");
-        System.out.println("7 Codificar");
-        System.out.println("8 Establir llavor");
-        System.out.println("9 Establir tope de paraules");
-        System.out.println("s Sortir");
-        System.out.print("Introdueix la teva opció: ");
-        opcio = AnalisisOpcio();
-        return opcio;
-
-    }*/
+ 
     public void TopeParaules() throws IOException {
         while (ParaulesT > ParaulesMAX) {
-            System.out.println("ERROR!!! Arxiu amb més de " + ParaulesMAX + " paraules!");
+            finestra.escriure("ERROR!!! Arxiu amb més de " + ParaulesMAX + " paraules!");
             Fitxer = AnalisisNomFitx();
             fitxIN = new FitxerIN(Fitxer);
             ParaulesT = fitxIN.ParaulesT();
@@ -161,13 +100,6 @@ public class PracticaProgGUI implements FinestraDMIInterf {
                 finestra.posarDibuix(0, 0, "imatges/lletramesrp.png", 1080, 720);
                 LletraMesRepetida();
                 res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
-
-                /*System.out.println("\n\n\n\n");
-                System.out.println("****************************************************************************");
-                System.out.println("              Lletra mes repetida               ");
-                System.out.println("****************************************************************************");
-                System.out.println("Nom fitxer: " + Fitxer.toString() + "\n");
-                 */
             }
             fitxIN.resetA();
         }
@@ -175,10 +107,93 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         if (op.iguals(posiblesOpcions[1])) {
             String res = null;
             while (res == null) {
-                finestra.posarDibuix(0, 0, "imatges/lletramesrp.png", 1080, 720);
+                finestra.posarDibuix(0, 0, "imatges/cartotals.png", 1080, 720);
                 AparicionsCaracters();
                 res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
-                fitxIN.resetA();
+
+            }
+            fitxIN.resetA();
+        }
+
+        if (op.iguals(posiblesOpcions[2])) {
+            String res = null;
+            while (res == null) {
+                finestra.posarDibuix(0, 0, "imatges/paraulamesrp.png", 1080, 720);
+                ParaulaMesRepetida();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            fitxIN.resetA();
+        }
+        if (op.iguals(posiblesOpcions[3])) {
+            String res = null;
+            while (res == null) {
+                String s = "";
+                s = finestra.agafar("Introdueix la paraula a cercar: ");
+                paraulaCerca = s.toCharArray();
+                finestra.posarDibuix(0, 0, "imatges/cercpal.png", 1080, 720);
+                CercarParaula();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            fitxIN.resetA();
+        }
+        if (op.iguals(posiblesOpcions[4])) {
+            String res = null;
+            while (res == null) {
+                String s = "";
+                s = finestra.agafar("Introdueix el text a cercar: ");
+                System.out.print("Introdueix el text a cercar: ");
+                text = s.toCharArray();
+                finestra.posarDibuix(0, 0, "imatges/cerctext.png", 1080, 720);
+                CercarText();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            fitxIN.resetA();
+        }
+        if (op.iguals(posiblesOpcions[5])) {
+            String res = null;
+            while (res == null) {
+                finestra.posarDibuix(0, 0, "imatges/palrep.png", 1080, 720);
+                ParaulesSeguides();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            fitxIN.resetA();
+        }
+        if (op.iguals(posiblesOpcions[6])) {
+            System.out.println("\n\n\n\n");
+            Codificar();
+            finestra.escriure("Codificat amb èxit");
+        }
+        if (op.iguals(posiblesOpcions[7])) {
+            System.out.println("\n\n\n\n");
+            EstablirLLavor();
+            finestra.escriure("Llavor assignada");
+        }
+        if (op.iguals(posiblesOpcions[8])) {
+            TopeDePal();
+            fitxIN.resetA();
+
+        }
+    }
+
+    public void SwitchCod(Paraula op) throws IOException {
+
+        if (op.iguals(posiblesOpcions[0])) {
+            String res = null;
+            while (res == null) {
+                finestra.posarDibuix(0, 0, "imatges/lletramesrp.png", 1080, 720);
+                LletraMesRepetida();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+                codifIN.resetA();
+            }
+        }
+
+        if (op.iguals(posiblesOpcions[1])) {
+            String res = null;
+            while (res == null) {
+                finestra.posarDibuix(0, 0, "imatges/cartotals.png", 1080, 720);
+                AparicionsCaracters();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+                codifIN.resetA();
             }
         }
 
@@ -191,193 +206,324 @@ public class PracticaProgGUI implements FinestraDMIInterf {
             }
         }
         if (op.iguals(posiblesOpcions[3])) {
-            System.out.print("Introdueix la paraula a cercar: ");
-            paraulaCerca = tec.llegirLiniaA();
-            System.out.println("\n\n\n\n");
-            CercarParaula();
-            fitxIN.resetA();
+            String res = null;
+            while (res == null) {
+                String s = "";
+                s = finestra.agafar("Introdueix la paraula a cercar: ");
+                paraulaCerca = s.toCharArray();
+                finestra.posarDibuix(0, 0, "imatges/cercpal.png", 1080, 720);
+                CercarParaula();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            codifIN.resetA();
         }
         if (op.iguals(posiblesOpcions[4])) {
-            System.out.print("Introdueix el text a cercar: ");
-            text = tec.llegirLiniaA();
-            System.out.println("\n\n\n\n");
-            CercarText();
-            fitxIN.resetA();
+            String res = null;
+            while (res == null) {
+                String s = "";
+                s = finestra.agafar("Introdueix el text a cercar: ");
+                System.out.print("Introdueix el text a cercar: ");
+                text = s.toCharArray();
+                finestra.posarDibuix(0, 0, "imatges/cercpal.png", 1080, 720);
+                CercarText();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            codifIN.resetA();
         }
         if (op.iguals(posiblesOpcions[5])) {
-            System.out.println("\n\n\n\n");
-            ParaulesSeguides();
-            fitxIN.resetA();
+            String res = null;
+            while (res == null) {
+                finestra.posarDibuix(0, 0, "imatges/palrep.png", 1080, 720);
+                ParaulesSeguides();
+                res = finestra.agafar("Introdueix qualsevol caràcter per tornar");
+            }
+            codifIN.resetA();
         }
         if (op.iguals(posiblesOpcions[6])) {
             System.out.println("\n\n\n\n");
             Codificar();
-
+            finestra.escriure("Codificat amb èxit");
         }
         if (op.iguals(posiblesOpcions[7])) {
             System.out.println("\n\n\n\n");
             EstablirLLavor();
+            finestra.escriure("Llavor assignada");
         }
         if (op.iguals(posiblesOpcions[8])) {
             TopeDePal();
-            fitxIN.resetA();
-
-        }
-    }
-
-    public void SwitchCod(Paraula op) throws IOException {
-
-        if (op.iguals(posiblesOpcions[0])) {
-            System.out.println("\n\n\n\n");
-            System.out.println("****************************************************************************");
-            System.out.println("              Lletra mes repetida               ");
-            System.out.println("****************************************************************************");
-            System.out.println("Nom fitxer: " + Fitxer.toString() + "\n");
-            LletraMesRepetida();
-            fitxIN.resetA();
-        }
-
-        if (op.iguals(posiblesOpcions[1])) {
-            System.out.println("\n\n\n\n");
-            AparicionsCaracters();
-            fitxIN.resetA();
-        }
-
-        if (op.iguals(posiblesOpcions[2])) {
-            System.out.println("\n\n\n\n");
-            ParaulaMesRepetida();
-        }
-        if (op.iguals(posiblesOpcions[3])) {
-            System.out.print("Introdueix la paraula a cercar: ");
-            paraulaCerca = tec.llegirLiniaA();
-            System.out.println("\n\n\n\n");
-            CercarParaula();
-            fitxIN.resetA();
-        }
-        if (op.iguals(posiblesOpcions[4])) {
-            System.out.print("Introdueix el text a cercar: ");
-            text = tec.llegirLiniaA();
-            System.out.println("\n\n\n\n");
-            CercarText();
-            fitxIN.resetA();
-        }
-        if (op.iguals(posiblesOpcions[5])) {
-            System.out.println("\n\n\n\n");
-            ParaulesSeguides();
-            fitxIN.resetA();
-        }
-        if (op.iguals(posiblesOpcions[6])) {
-            System.out.println("\n\n\n\n");
-            Codificar();
-
-        }
-        if (op.iguals(posiblesOpcions[7])) {
-            System.out.println("\n\n\n\n");
-            EstablirLLavor();
-        }
-        if (op.iguals(posiblesOpcions[8])) {
-            TopeDePal();
-            fitxIN.resetA();
+            codifIN.resetA();
 
         }
     }
 
     //Metodo que nos indica cual es la letra mas repetida del txt es el apartado 1 del menu principal
     public void LletraMesRepetida() throws FileNotFoundException, IOException {
-
-        int nombreabc[] = fitxIN.nombreAparicionsC();
-        int valor = fitxIN.MesRepetidaLl(nombreabc);
-        char abc[] = abecedarioES();
-        finestra.posarText(715, 328, abc[valor] + "", 4, 138, 122, 101);
-        finestra.posarText(355, 383, nombreabc[valor] + " vegades", 3, 138, 122, 101);
-        System.out.println("La lletra me repetida es la " + abc[valor] + " i surt un total de " + nombreabc[valor] + " vegades");
-
+        if (codif == false) {
+            int nombreabc[] = fitxIN.nombreAparicionsC();
+            int valor = fitxIN.MesRepetidaLl(nombreabc);
+            char abc[] = abecedarioES();
+            finestra.posarText(715, 325, abc[valor] + "", 2, 200, 180, 150);
+            finestra.posarText(355, 379, nombreabc[valor] + " vegades", 2, 200, 180, 150);
+        }
+        if (codif == true) {
+            int nombreabc[] = codifIN.nombreAparicionsC();
+            int valor = codifIN.MesRepetidaLl(nombreabc);
+            char abc[] = abecedarioES();
+            finestra.posarText(715, 325, abc[valor] + "", 2, 200, 180, 150);
+            finestra.posarText(355, 379, nombreabc[valor] + " vegades", 2, 200, 180, 150);
+        }
     }
 
     //Metodo que nos indica el nombre de apariciones de cada caracter es el apartado 2 del menu principal
     public void AparicionsCaracters() throws IOException {
-        int nombreAparicions[] = fitxIN.nombreAparicionsC();
-        char abcES[] = abecedarioES();
-        for (int i = 0; i < 27; i++) {
-            System.out.println("La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades");
-            System.out.println("");
+        if (codif == false) {
+            int y = 168;
+            int nombreAparicions[] = fitxIN.nombreAparicionsC();
+            char abcES[] = abecedarioES();
+            for (int i = 0; i < 27; i++) {
+                finestra.posarText(350, y, "La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades", 2, 200, 180, 150);
+                y = y + 20;
+            }
+        }
+        if (codif == true) {
+            int y = 168;
+            int nombreAparicions[] = codifIN.nombreAparicionsC();
+            char abcES[] = abecedarioES();
+            for (int i = 0; i < 27; i++) {
+                finestra.posarText(350, y, "La lletra " + abcES[i] + " surt un total de " + nombreAparicions[i] + " vegades", 2, 200, 180, 150);
+                y = y + 20;
+            }
         }
     }
 
     //Metodo que indica cual es la palabra mas repetida del txt es el apartado 3 del menu principal
     public void ParaulaMesRepetida() throws IOException {
-        BibliotecaParaules biblio = new BibliotecaParaules();
-        Paraula paraulanova = fitxIN.llegirP();
-        while (!paraulanova.buida()) {
-            biblio.Tractar(paraulanova);
-            paraulanova = fitxIN.llegirP();
-        }
-        Paraula pal[] = biblio.getTrobades();
-        int comptador[] = biblio.getAparicionsPal();
-        int valor[] = fitxIN.MesRepetidaPal(comptador);
-        for (int i = 0; i < valor.length; i++) {
-            comptador[i]++;
-        }
-        for (int i = 0; i < valor.length; i++) {
-            int x = 715;
-            int y = 328;
-            if (valor[i] != 999999999) {
-                finestra.posarText(x, y, pal[valor[i]] + "", 4, 138, 122, 101);
-                System.out.println("La paraula mes repetida es " + pal[valor[i]] + " i surt un total de " + comptador[valor[i]] + " vegades");
+        if (codif == false) {
+            BibliotecaParaules biblio = new BibliotecaParaules();
+            Paraula paraulanova = fitxIN.llegirP();
+            while (!paraulanova.buida()) {
+                biblio.Tractar(paraulanova);
+                paraulanova = fitxIN.llegirP();
             }
-            x = x + 200;
-            y = y + 200;
+            Paraula pal[] = biblio.getTrobades();
+            int comptador[] = biblio.getAparicionsPal();
+            int valor[] = fitxIN.MesRepetidaPal(comptador);
+            for (int i = 0; i < valor.length; i++) {
+                comptador[i]++;
+            }
+            int x = 650;
+            int y = 324;
+            int x2 = 300;
+            int y2 = 380;
+            for (int i = 0; i < valor.length; i++) {
+
+                if (valor[i] != 999999999) {
+                    finestra.posarText(x, y, pal[valor[i]] + ", ", 3, 200, 180, 150);
+                    finestra.posarText(x2, y2, comptador[valor[i]] + ", ", 3, 200, 180, 150);
+                }
+                x = x + 80;
+                x2 = x2 + 35;
+
+            }
+        }
+        if (codif == true) {
+            BibliotecaParaules biblio = new BibliotecaParaules();
+            Paraula paraulanova = codifIN.llegirP();
+            while (!paraulanova.buida()) {
+                biblio.Tractar(paraulanova);
+                paraulanova = codifIN.llegirP();
+            }
+            Paraula pal[] = biblio.getTrobades();
+            int comptador[] = biblio.getAparicionsPal();
+            int valor[] = codifIN.MesRepetidaPal(comptador);
+            for (int i = 0; i < valor.length; i++) {
+                comptador[i]++;
+            }
+            int x = 650;
+            int y = 324;
+            int x2 = 300;
+            int y2 = 380;
+            for (int i = 0; i < valor.length; i++) {
+
+                if (valor[i] != 999999999) {
+                    finestra.posarText(x, y, pal[valor[i]] + ", ", 3, 200, 180, 150);
+                    finestra.posarText(x2, y2, comptador[valor[i]] + ", ", 3, 200, 180, 150);
+                }
+                x = x + 80;
+                x2 = x2 + 35;
+
+            }
+
         }
     }
 
     //Metodo que nos encuentra la palabra introducida es el apartado 4 del menu principal
     public void CercarParaula() throws IOException {
-        fitxIN.setCol(0);
-        fitxIN.setLin(1);
-        Paraula paraula1 = new Paraula(paraulaCerca);
-        Paraula paraula2 = fitxIN.llegirP();
-        while (!paraula2.buida()) {
-            if (paraula1.iguals(paraula2)) {
-                System.out.println("Apareix a la columna " + fitxIN.colPal(paraula2) + " y a la linia " + fitxIN.getLin() + "\n");
-            }
-            paraula2 = fitxIN.llegirP();
+        if (codif == false) {
+            fitxIN.setCol(0);
+            fitxIN.setLin(1);
+            Paraula paraula1 = new Paraula(paraulaCerca);
+            Paraula paraula2 = fitxIN.llegirP();
+            int y = 125;
+            while (!paraula2.buida()) {
+                if (paraula1.iguals(paraula2)) {
+                    finestra.posarText(350, y, "Apareix a la columna " + fitxIN.colPal(paraula2) + " y linia " + fitxIN.getLin(), 2, 200, 180, 150);
+                    y = y + 30;
+                }
+                paraula2 = fitxIN.llegirP();
 
+            }
+        }
+        if (codif == true) {
+            codifIN.setCol(0);
+            codifIN.setLin(1);
+            Paraula paraula1 = new Paraula(paraulaCerca);
+            Paraula paraula2 = codifIN.llegirP();
+            int y = 125;
+            while (!paraula2.buida()) {
+                if (paraula1.iguals(paraula2)) {
+                    finestra.posarText(350, y, "Apareix a la columna " + codifIN.colPal(paraula2) + " y linia " + codifIN.getLin(), 2, 200, 180, 150);
+                    y = y + 30;
+                }
+                paraula2 = codifIN.llegirP();
+
+            }
         }
     }
 
     //Metodo que nos encuentra el texto introducido es el apartado 5 del menu principal
     public void CercarText() throws IOException {
-        Text primertext = new Text(text);
-        Text segontext = fitxIN.llegirT();
-        segontext.setCol(1);
-        segontext.setLin(1);
-        Paraula primera = primertext.agafarParauladeText();
-        Paraula segona = segontext.agafarParauladeText();
-        while (!segona.buida()) {
-            if (primera.iguals(segona)) {
+        if (codif == false) {
+            Text primertext = new Text(text);
+            Text segontext = fitxIN.llegirT();
+            segontext.setCol(1);
+            segontext.setLin(1);
+            Paraula primera = primertext.agafarParauladeText();
+            Paraula segona = segontext.agafarParauladeText();
+            int y = 125;
+            while (!segona.buida()) {
+                if (primera.iguals(segona)) {
 
-                if (primertext.Tigual(segontext)) {
-                    System.out.println("Text trobat a la linia " + segontext.lin + " i columna " + (segontext.col - segona.ind));
+                    if (primertext.Tigual(segontext)) {
+                        finestra.posarText(350, y, "Text trobat a la linia " + segontext.lin + " i columna " + (segontext.col - segona.ind), 2, 200, 180, 150);
+                        y = y + 30;
+                    }
                 }
+                segona = segontext.agafarParauladeText();
+
             }
-            segona = segontext.agafarParauladeText();
+        }
+        if (codif == true) {
+            Text primertext = new Text(text);
+            Text segontext = codifIN.llegirT();
+            segontext.setCol(1);
+            segontext.setLin(1);
+            Paraula primera = primertext.agafarParauladeText();
+            Paraula segona = segontext.agafarParauladeText();
+            int y = 125;
+            while (!segona.buida()) {
+                if (primera.iguals(segona)) {
+
+                    if (primertext.Tigual(segontext)) {
+                        finestra.posarText(350, y, "Text trobat a la linia " + segontext.lin + " i columna " + (segontext.col - segona.ind), 2, 200, 180, 150);
+                        y = y + 30;
+                    }
+                }
+                segona = segontext.agafarParauladeText();
+
+            }
+
         }
     }
 
-    //Metodo que nos encuentra 2 palabras iguales que van seguidases el apartado 6 del menu principal 
-    public void ParaulesSeguides() throws IOException {
-        fitxIN.setLin(1);
-        fitxIN.setCol(0);
-        Paraula primera = fitxIN.llegirP();
-        Paraula segona = fitxIN.llegirP();
-        while (!segona.buida()) {
-            if (primera.iguals(segona)) {
+    public void menu() throws IOException {
+        File fich;
+        File f1 = new File("copiadecodificada.txt");
+        finestra = FinestraDMI.crear(this, 1080, 720);
+        finestra.posarDibuix(0, 0, "imatges/titulo.png", 1080, 720);
+        Fitxer = AnalisisNomFitx();
+        fitxIN = new FitxerIN(Fitxer);
+        ParaulesT = fitxIN.ParaulesT();
+        Paraula fitxerANT = new Paraula(Fitxer.toString().toCharArray());
+        System.out.println(fitxerANT);
+        PosOPC();
+        COD();
+        if (Fitxer.codificar(cod)) {
+            System.out.println("Has introduit un fitxer codificat,");
+            finestra.posarDibuix(0, 0, "imatges/llavor.png", 1080, 720);
+            EstablirLLavor();
+            decodFitx();
+            codifIN = new FitxerIN(Fitxer);
+            fich = new File(Fitxer.toString());
+            System.out.println(Fitxer);
+            codif = true;
+            finestra.escriure("Si vols esborrar la copia de l'arxiu codificat pulsa s, si no vols pulsa la creu per sortir i guardar-lo.");
+            do {
+                fich.renameTo(f1);
+                finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
+                finestra.posarText(855, 476, fitxerANT.toString(), 1, 138, 122, 101);
+                finestra.posarText(931, 453, ParaulesMAX + "", 1, 138, 122, 101);
+                finestra.posarText(968, 498, fitxIN.CaractersT() + "", 1, 138, 122, 101);
+                finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
+                finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
+                finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
+                SwitchCod(AnalisisOpcio());
+            } while (!opcio.iguals(posiblesOpcions[9]));
+            codifIN.close();
+            fitxIN.close();
+            fich.delete();
+            finestra.agafar("Esborrat, has de reiniciar el programa.");
 
-                System.out.println("Trobada " + primera + " a la linia " + fitxIN.getLin() + " i columna " + col);
+        } else {
+            codif = false;
+            fich = new File(Fitxer.toString());
+            do {
+                finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
+                finestra.posarText(855, 476, fitxerANT.toString(), 1, 138, 122, 101);
+                finestra.posarText(931, 453, ParaulesMAX + "", 1, 138, 122, 101);
+                finestra.posarText(968, 498, fitxIN.CaractersT() + "", 1, 138, 122, 101);
+                finestra.posarText(965, 522, fitxIN.ParaulesT() + "", 1, 138, 122, 101);
+                finestra.posarText(945, 545, fitxIN.getLin() + "", 1, 138, 122, 101);
+                finestra.posarText(866, 569, llavor + "", 1, 138, 122, 101);
+                Switch(AnalisisOpcio());
+
+            } while (!opcio.iguals(posiblesOpcions[9]));
+        }
+    }
+
+    //Metodo que nos encuentra 2 palabras iguales que van seguidas es el apartado 6 del menu principal 
+    public void ParaulesSeguides() throws IOException {
+        if (codif == false) {
+            fitxIN.setLin(1);
+            fitxIN.setCol(0);
+            Paraula primera = fitxIN.llegirP();
+            Paraula segona = fitxIN.llegirP();
+            int y = 125;
+            while (!segona.buida()) {
+                if (primera.iguals(segona)) {
+                    finestra.posarText(350, y, "Trobada " + primera + " a la linia " + fitxIN.getLin() + " i columna " + col, 2, 200, 180, 150);
+                    y = y + 30;
+                }
+                primera = segona;
+                col = fitxIN.getCol() - primera.ind;
+                segona = fitxIN.llegirP();
             }
-            primera = segona;
-            col = fitxIN.getCol() - primera.ind;
-            segona = fitxIN.llegirP();
+        }
+        if (codif == true) {
+            codifIN.setLin(1);
+            codifIN.setCol(0);
+            Paraula primera = codifIN.llegirP();
+            Paraula segona = codifIN.llegirP();
+            int y = 125;
+            while (!segona.buida()) {
+                if (primera.iguals(segona)) {
+                    finestra.posarText(350, y, "Trobada " + primera + " a la linia " + codifIN.getLin() + " i columna " + col, 2, 200, 180, 150);
+                    y = y + 30;
+                }
+                primera = segona;
+                col = codifIN.getCol() - primera.ind;
+                segona = codifIN.llegirP();
+            }
         }
     }
 
@@ -386,6 +532,8 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         CodDes Cod = new CodDes();
         Cod.PrepararCodificacio(llavor);
         Cod.codificar(Fitxer);
+        decodFitx();    
+        
     }
 
     //Metodo que nos permite modificar el valor de la semilla del random
@@ -398,8 +546,9 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         LT tec = new LT();
         Integer semilla = -1;
         while (semilla <= -1) {
-            semilla = Integer.parseInt(finestra.agafar(""));
-            //System.out.print("  Introdueix el valor de la llavor  (nombre entre 0 i 9999): ");
+           
+            semilla = Integer.parseInt(finestra.agafar("Introdueix la llavor entre 0 i 10000"));
+            //System.out.print("  Introdueix el valor de la llavor  (nombre entre 0 i 10000): ");
 
             if ((semilla == null) || (semilla <= -1) || (semilla > 10000)) {
                 finestra.escriure("ERROR!!!! Llavor incorrecta");
@@ -412,15 +561,27 @@ public class PracticaProgGUI implements FinestraDMIInterf {
 
     //Establir tope de Paraules
     public void TopeDePal() throws IOException {
-        System.out.print("Indica quin serà el nou tope de paraules: ");
-        ParaulesMAX = tec.llegirSencer();
-        Fitxer = AnalisisNomFitx();
-        fitxIN = new FitxerIN(Fitxer);
-        ParaulesT = fitxIN.ParaulesT();
-        TopeParaules();
-        do {
-            Switch(AnalisisOpcio());
-        } while (!opcio.iguals(posiblesOpcions[9]));
+        if (codif == false) {
+            String s = finestra.agafar("Indica quin serà el nou tope de paraules: ");
+            ParaulesMAX = Integer.parseInt(s);
+            finestra.posarDibuix(0, 0, "imatges/titulo.png", 1080, 720);
+            Fitxer = AnalisisNomFitx();
+            fitxIN = new FitxerIN(Fitxer);
+            ParaulesT = fitxIN.ParaulesT();
+            TopeParaules();
+            
+            
+        }
+        if (codif == true) {
+            String s = finestra.agafar("Indica quin serà el nou tope de paraules: ");
+            ParaulesMAX = Integer.parseInt(s);
+            finestra.posarDibuix(0, 0, "imatges/titulo.png", 1080, 720);
+            Fitxer = AnalisisNomFitx();
+            codifIN = new FitxerIN(Fitxer);
+            ParaulesT = codifIN.ParaulesT();
+            TopeParaules();
+            
+        }
     }
 
     //Metodo que crea el abecedario español
@@ -471,7 +632,7 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         CodDes Cod = new CodDes();
         Cod.PrepararCodificacio(llavor);
         Cod.descodificar(Fitxer);
-        fitxIN  =new FitxerIN(Fitxer.PerCodificar());
+
     }
 
     public static void main(String[] args) throws IOException {
