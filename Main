@@ -457,7 +457,7 @@ public class PracticaProgGUI implements FinestraDMIInterf {
             fich = new File(Fitxer.toString());
             System.out.println(Fitxer);
             codif = true;
-            finestra.escriure("Si vols esborrar la copia de l'arxiu codificat pulsa s, si no vols pulsa la creu per sortir i guardar-lo.");
+            finestra.escriure("Si vols esborrar la copia de l'arxiu decodificat pulsa s, si no vols pulsa la creu per sortir i guardar-lo.");
             do {
                 fich.renameTo(f1);
                 finestra.posarDibuix(0, 0, "imatges/pantalla2.png", 1080, 720);
