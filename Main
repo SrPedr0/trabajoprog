@@ -441,9 +441,10 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         File f1 = new File("copiadecodificada.txt");
         finestra = FinestraDMI.crear(this, 1080, 720);
         finestra.posarDibuix(0, 0, "imatges/titulo.png", 1080, 720);
-        Fitxer = AnalisisNomFitx();
+        Fitxer = AnalisisNomFitx();       
         fitxIN = new FitxerIN(Fitxer);
         ParaulesT = fitxIN.ParaulesT();
+        TopeParaules();
         Paraula fitxerANT = new Paraula(Fitxer.toString().toCharArray());
         System.out.println(fitxerANT);
         PosOPC();
@@ -644,3 +645,4 @@ public class PracticaProgGUI implements FinestraDMIInterf {
         finestra.escriureln("Has picat la coordenada (" + r.getX() + "," + r.getY() + ")");
     }
 }
+
